@@ -6,9 +6,6 @@ public class TreeController : MonoBehaviour
 {
     private TreeModel _treeModel;
 
-    [field: SerializeField]
-    private TreeView _treeView;
-
     public void Init(TreeModel treeModel)
     {
         _treeModel = treeModel;
@@ -17,7 +14,6 @@ public class TreeController : MonoBehaviour
     public void GetDamage(int amount)
     {
         _treeModel.Health -= amount;
-        _treeView.UpdateHPUI(amount);
         Debug.Log(_treeModel.Health);
     }
 

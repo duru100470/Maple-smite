@@ -14,6 +14,7 @@ public class TreeView : MonoBehaviour
     [field: SerializeField]
     private GameObject _tree_HP_UI;
 
+    #region HP Bar.
     [field: SerializeField]
     private Slider _hp_Slider_1P;
     [field: SerializeField]
@@ -22,7 +23,9 @@ public class TreeView : MonoBehaviour
     private RectTransform _hp_1P;
     [field: SerializeField]
     private RectTransform _hp_2P;
+    #endregion
 
+    #region Damage Bar.
     [field: SerializeField]
     private Slider _damage_Slider_1P;
     [field: SerializeField]
@@ -34,9 +37,10 @@ public class TreeView : MonoBehaviour
 
     [field: SerializeField]
     private float _damage_Bar_Speed = 100f;
-    private WaitForSeconds _damage_Bar_Delay = new WaitForSeconds(.4f);
+    private WaitForSeconds _damage_Bar_Delay = new WaitForSeconds(.5f);
+    #endregion
 
-
+    #region Damage UI Tween.
     [field: SerializeField]
     private Vector3 _damageSeq_TO = new Vector3(0.05f, 0.05f, 0.05f);
     [field: SerializeField]
@@ -45,12 +49,25 @@ public class TreeView : MonoBehaviour
     private int _damageSeq_Vibrato = 0;
 
     private Sequence _damageSeq;
+    #endregion
 
     private bool _firstAttack = false;
 
     public void Init(TreeModel treeModel)
     {
+        _screen_Width = Screen.width;
+        _screen_Height = Screen.height;
+
+        Debug.Log("Sceen Size : (" + _screen_Width + ", " + _screen_Height + ")");
+
         _treeModel = treeModel;
+
+        // 해상도 대응.
+        _hp_1P.sizeDelta = new Vector2(_screen_Width * 0.5f, _hp_1P.sizeDelta.y);
+        _hp_2P.sizeDelta = new Vector2(_screen_Width * 0.5f, _hp_2P.sizeDelta.y);
+
+        _hp_1P.anchoredPosition = new Vector2(_screen_Width * 0.25f, _hp_1P.anchoredPosition.y);
+        _hp_2P.anchoredPosition = new Vector2(-_screen_Width * 0.25f, _hp_2P.anchoredPosition.y);
 
         _hp_Slider_1P.maxValue = _treeModel.Health;
         _hp_Slider_1P.value = _treeModel.Health;
@@ -64,10 +81,14 @@ public class TreeView : MonoBehaviour
         _damage_2P.anchoredPosition = new Vector2(0, _damage_2P.anchoredPosition.y);
 
         _firstAttack = false;
+
+        _treeModel.OnHpChanged += UpdateHPUI;
     }
 
-    public void UpdateHPUI(int damage)
+    private void UpdateHPUI(int prevHealth, int currentHealth)
     {
+        int damage = prevHealth - currentHealth;
+
         _hp_Slider_1P.value = _treeModel.Health;
         _hp_Slider_2P.value = _treeModel.Health;
 
