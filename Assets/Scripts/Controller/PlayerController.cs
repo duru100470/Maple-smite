@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -23,13 +24,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject _stoneObject;
 
-
-
     public void Init(PlayerModel playerModel)
     {
         _playerModel = playerModel;
         _curState = PlayerState.Idle;
         _keyInputSender.OnKeyPressed += PressKey;
+
+        Reset();
+    }
+
+    public void Reset()
+    {
+        StopAllCoroutines();
+
+        _isAxeCooldown = false;
+        _isThrowCooldown = false;
+        _curState = PlayerState.Idle;
     }
 
     private void PressKey(KeyType keyType)
