@@ -13,10 +13,16 @@ public class TreeView : MonoBehaviour
 
     [field: SerializeField]
     private GameObject _tree_HP_UI;
+
     [field: SerializeField]
     private Slider _hp_Slider_1P;
     [field: SerializeField]
     private Slider _hp_Slider_2P;
+    [field: SerializeField]
+    private RectTransform _hp_1P;
+    [field: SerializeField]
+    private RectTransform _hp_2P;
+
     [field: SerializeField]
     private Slider _damage_Slider_1P;
     [field: SerializeField]
@@ -25,6 +31,10 @@ public class TreeView : MonoBehaviour
     private RectTransform _damage_1P;
     [field: SerializeField]
     private RectTransform _damage_2P;
+
+    [field: SerializeField]
+    private float _damage_Bar_Speed = 100f;
+    private WaitForSeconds _damage_Bar_Delay = new WaitForSeconds(.4f);
 
 
     [field: SerializeField]
@@ -35,6 +45,8 @@ public class TreeView : MonoBehaviour
     private int _damageSeq_Vibrato = 0;
 
     private Sequence _damageSeq;
+
+    private bool _firstAttack = false;
 
     public void Init(TreeModel treeModel)
     {
@@ -47,14 +59,61 @@ public class TreeView : MonoBehaviour
         _hp_Slider_2P.maxValue = _treeModel.Health;
         _hp_Slider_2P.value = _treeModel.Health;
         _hp_Slider_2P.minValue = 0;
+
+        _damage_1P.anchoredPosition = new Vector2(0, _damage_1P.anchoredPosition.y);
+        _damage_2P.anchoredPosition = new Vector2(0, _damage_2P.anchoredPosition.y);
+
+        _firstAttack = false;
     }
 
-    public void UpdateHPUI()
+    public void UpdateHPUI(int damage)
     {
         _hp_Slider_1P.value = _treeModel.Health;
         _hp_Slider_2P.value = _treeModel.Health;
 
+        // 데미지 크기만큼 데미지 슬라이더 생성.
+        _damage_1P.sizeDelta = new Vector2(_hp_1P.sizeDelta.x * (damage / _hp_Slider_1P.maxValue), _damage_1P.sizeDelta.y);
+        _damage_2P.sizeDelta = new Vector2(_hp_2P.sizeDelta.x * (damage / _hp_Slider_2P.maxValue), _damage_2P.sizeDelta.y);
+
+        if (!_firstAttack)
+        {
+            _damage_1P.anchoredPosition += new Vector2(_damage_1P.sizeDelta.x * 0.5f, 0);
+            _damage_2P.anchoredPosition -= new Vector2(_damage_2P.sizeDelta.x * 0.5f, 0);
+            _firstAttack = true;
+        }
+        else
+        {
+            _damage_1P.anchoredPosition += new Vector2(_damage_1P.sizeDelta.x, 0);
+            _damage_2P.anchoredPosition -= new Vector2(_damage_2P.sizeDelta.x, 0);
+        }
+
+        _damage_Slider_1P.maxValue = damage;
+        _damage_Slider_2P.maxValue = damage;
+
+        DamageBar();
+
         GetDamageUITween();
+    }
+
+    private void DamageBar()
+    {
+        _damage_Slider_1P.value = _damage_Slider_1P.maxValue;
+        _damage_Slider_2P.value = _damage_Slider_2P.maxValue;
+
+        StartCoroutine(DamageBarCoroutine());
+    }
+
+    private IEnumerator DamageBarCoroutine()
+    {
+        yield return _damage_Bar_Delay;
+
+        while (_damage_Slider_1P.value > 0 && _damage_Slider_2P.value > 0)
+        {
+            _damage_Slider_1P.value -= _damage_Bar_Speed * Time.deltaTime;
+            _damage_Slider_2P.value -= _damage_Bar_Speed * Time.deltaTime;
+
+            yield return null;
+        }
     }
 
     private void GetDamageUITween()

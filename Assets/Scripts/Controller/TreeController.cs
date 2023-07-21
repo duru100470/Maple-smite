@@ -17,7 +17,7 @@ public class TreeController : MonoBehaviour
     public void GetDamage(int amount)
     {
         _treeModel.Health -= amount;
-        _treeView.UpdateHPUI();
+        _treeView.UpdateHPUI(amount);
         Debug.Log(_treeModel.Health);
     }
 
