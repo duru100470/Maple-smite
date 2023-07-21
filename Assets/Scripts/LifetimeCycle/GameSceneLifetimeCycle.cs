@@ -16,6 +16,10 @@ public class GameSceneLifetimeCycle : LifetimeCycle
     private KeyInputSender _keyInputSender1;
     [SerializeField]
     private KeyInputSender _keyInputSender2;
+    [SerializeField]
+    private SkillView _skillView1;
+    [SerializeField]
+    private SkillView _skillView2;
 
     public override void Initialize()
     {
@@ -32,6 +36,8 @@ public class GameSceneLifetimeCycle : LifetimeCycle
         _keyInputSender2.Init();
         _playerController1.Init(playerModel1);
         _playerController2.Init(playerModel2);
+        _skillView1.Init(playerModel1);
+        _skillView2.Init(playerModel2);
     }
 
     public void Dispose()

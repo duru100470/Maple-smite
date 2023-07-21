@@ -62,58 +62,55 @@ public class TreeView : MonoBehaviour
 
         _treeModel = treeModel;
 
-        // 해상도 대응.
-        _hp_1P.sizeDelta = new Vector2(_screen_Width * 0.5f, _hp_1P.sizeDelta.y);
-        _hp_2P.sizeDelta = new Vector2(_screen_Width * 0.5f, _hp_2P.sizeDelta.y);
-
-        _hp_1P.anchoredPosition = new Vector2(_screen_Width * 0.25f, _hp_1P.anchoredPosition.y);
-        _hp_2P.anchoredPosition = new Vector2(-_screen_Width * 0.25f, _hp_2P.anchoredPosition.y);
-
-        _hp_Slider_1P.maxValue = _treeModel.Health;
-        _hp_Slider_1P.value = _treeModel.Health;
-        _hp_Slider_1P.minValue = 0;
-
-        _hp_Slider_2P.maxValue = _treeModel.Health;
-        _hp_Slider_2P.value = _treeModel.Health;
-        _hp_Slider_2P.minValue = 0;
-
-        _damage_1P.anchoredPosition = new Vector2(0, _damage_1P.anchoredPosition.y);
-        _damage_2P.anchoredPosition = new Vector2(0, _damage_2P.anchoredPosition.y);
+        SetHPUI(_hp_1P, _damage_1P, _hp_Slider_1P, 1);
+        SetHPUI(_hp_2P, _damage_2P, _hp_Slider_2P, -1);
 
         _firstAttack = false;
 
-        _treeModel.OnHpChanged += UpdateHPUI;
+        _treeModel.OnHpChanged += UpdateAllHPUI;
     }
 
-    private void UpdateHPUI(int prevHealth, int currentHealth)
+    private void SetHPUI(RectTransform ui1, RectTransform ui2, Slider slider, int direction)
+    {
+        ui1.sizeDelta = new Vector2(_screen_Width * 0.5f, ui1.sizeDelta.y);
+        ui1.anchoredPosition = new Vector2(direction * _screen_Width * 0.25f, ui1.anchoredPosition.y);
+        slider.maxValue = _treeModel.Health;
+        slider.value = _treeModel.Health;
+        slider.minValue = 0;
+        ui2.anchoredPosition = new Vector2(0, ui2.anchoredPosition.y);
+    }
+
+    private void UpdateAllHPUI(int prevHealth, int currentHealth)
     {
         int damage = prevHealth - currentHealth;
 
-        _hp_Slider_1P.value = _treeModel.Health;
-        _hp_Slider_2P.value = _treeModel.Health;
+        UpdateDamageUI(damage, _hp_Slider_1P, _damage_Slider_1P, _hp_1P, _damage_1P);
+        UpdateDamageUI(damage, _hp_Slider_2P, _damage_Slider_2P, _hp_2P, _damage_2P);
 
-        // 데미지 크기만큼 데미지 슬라이더 생성.
-        _damage_1P.sizeDelta = new Vector2(_hp_1P.sizeDelta.x * (damage / _hp_Slider_1P.maxValue), _damage_1P.sizeDelta.y);
-        _damage_2P.sizeDelta = new Vector2(_hp_2P.sizeDelta.x * (damage / _hp_Slider_2P.maxValue), _damage_2P.sizeDelta.y);
+        UpdateDamageAnchor(_damage_1P, 1);
+        UpdateDamageAnchor(_damage_2P, -1);
 
-        if (!_firstAttack)
-        {
-            _damage_1P.anchoredPosition += new Vector2(_damage_1P.sizeDelta.x * 0.5f, 0);
-            _damage_2P.anchoredPosition -= new Vector2(_damage_2P.sizeDelta.x * 0.5f, 0);
-            _firstAttack = true;
-        }
-        else
-        {
-            _damage_1P.anchoredPosition += new Vector2(_damage_1P.sizeDelta.x, 0);
-            _damage_2P.anchoredPosition -= new Vector2(_damage_2P.sizeDelta.x, 0);
-        }
-
-        _damage_Slider_1P.maxValue = damage;
-        _damage_Slider_2P.maxValue = damage;
+        if (!_firstAttack) _firstAttack = true;
 
         DamageBar();
 
         GetDamageUITween();
+    }
+
+    private void UpdateDamageUI(int damage, Slider slider1, Slider slider2, RectTransform ui1, RectTransform ui2)
+    {
+        slider1.value = _treeModel.Health;
+
+        // 데미지 크기만큼 데미지 슬라이더 생성.
+        ui2.sizeDelta = new Vector2(ui1.sizeDelta.x * (damage / slider1.maxValue), ui2.sizeDelta.y);
+
+        slider2.maxValue = damage;
+    }
+
+    private void UpdateDamageAnchor(RectTransform ui, int direction)
+    {
+        if (!_firstAttack) ui.anchoredPosition += new Vector2(ui.sizeDelta.x * 0.5f, 0) * direction;
+        else ui.anchoredPosition += new Vector2(ui.sizeDelta.x, 0) * direction;
     }
 
     private void DamageBar()
