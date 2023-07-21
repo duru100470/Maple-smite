@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator DoThrowing()
     {
         var go = Instantiate(_stoneObject, transform);
-        go.GetComponent<ProjectileController>().Init(_isHeadingRight);
+        go.GetComponent<ProjectileController>().Init(_isHeadingRight, _playerModel.ThrowStunDuration, gameObject);
 
         _curState = PlayerState.Act;
         yield return new WaitForSeconds(_playerModel.ThrowCooldown);
@@ -80,12 +80,12 @@ public class PlayerController : MonoBehaviour
 
     public void GetStunned(float duration)
     {
+        StopAllCoroutines();
         StartCoroutine(GetStunnedCoroutine(duration));
     }
 
     private IEnumerator GetStunnedCoroutine(float duration)
     {
-        StopAllCoroutines();
         _curState = PlayerState.Stun;
         yield return new WaitForSeconds(duration);
         _curState = PlayerState.Idle;
