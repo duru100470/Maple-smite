@@ -5,12 +5,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Fields")]
+    [SerializeField]
+    private bool _isHeadingRight;
+    private PlayerState _curState;
+
     private PlayerModel _playerModel;
+    [Header("Dependencies")]
     [SerializeField]
     private KeyInputSender _keyInputSender;
     [SerializeField]
     private TreeController _treeController;
-    private PlayerState _curState;
+
+    [Header("Prefabs")]
+    [SerializeField]
+    private GameObject _stoneObject;
+
+
 
     public void Init(PlayerModel playerModel)
     {
@@ -48,7 +59,9 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator DoThrowing()
     {
-        // TODO: 던지기 구현
+        var go = Instantiate(_stoneObject, transform);
+        go.GetComponent<ProjectileController>().Init(_isHeadingRight);
+
         _curState = PlayerState.Act;
         yield return new WaitForSeconds(_playerModel.ThrowCooldown);
         _curState = PlayerState.Idle;

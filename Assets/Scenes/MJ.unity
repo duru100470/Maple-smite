@@ -352,8 +352,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc47aab63afdc0428d1eb80182a1bb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isHeadingRight: 0
   _keyInputSender: {fileID: 1852251056}
   _treeController: {fileID: 230327935}
+  _stoneObject: {fileID: 0}
 --- !u!1 &1852251054
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,8 +448,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc47aab63afdc0428d1eb80182a1bb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isHeadingRight: 1
   _keyInputSender: {fileID: 2016931367}
   _treeController: {fileID: 230327935}
+  _stoneObject: {fileID: 2265571671118478652, guid: 7f0d1176991b2604b99033e68095485c, type: 3}
 --- !u!212 &1938267073
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -548,6 +552,8 @@ MonoBehaviour:
   - InputKey: 97
     Action: 1
   - InputKey: 115
+    Action: 2
+  - InputKey: 100
     Action: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
