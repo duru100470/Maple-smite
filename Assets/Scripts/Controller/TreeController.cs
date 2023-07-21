@@ -11,17 +11,17 @@ public class TreeController : MonoBehaviour
         _treeModel = treeModel;
     }
 
-    public void GetDamage(int amount)
+    public void GetDamage(int amount, int attackerId)
     {
+        _treeModel.LastAttackerId = attackerId;
         _treeModel.Health -= amount;
-        Debug.Log(_treeModel.Health);
     }
 
     private IEnumerator GetLinearDamage()
     {
         while (true)
         {
-            GetDamage(10);
+            GetDamage(10, 0);
             yield return new WaitForSeconds(.5f);
         }
     }

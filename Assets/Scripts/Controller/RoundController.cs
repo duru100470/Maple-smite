@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class RoundController : MonoBehaviour
 {
     private RoundModel _roundModel;
+    private TreeModel _treeModel;
     [Header("Dependencies")]
     [SerializeField]
     private TreeController _treeController;
@@ -17,15 +19,31 @@ public class RoundController : MonoBehaviour
     {
         _roundModel = roundModel;
 
-        StartNewRound(_roundModel.StageIndex);
+        StartNewRound();
     }
 
-    private void StartNewRound(int roundIdx)
+    // TODO: RoundView에서 증강 선택이 완료되거나, 시간이 만료되면 StartNewRound 호출
+    private void StartNewRound()
     {
-        var treeModel = new TreeModel(1000);
+        var roundIdx = _roundModel.StageIndex;
+
+        var treeModel = new TreeModel(_roundModel.TreeHealthByStage[roundIdx]);
+        _treeModel.OnTreeDestroyed += OnStageOver;
         _treeController.Init(treeModel);
 
         _playerController1.Reset();
         _playerController2.Reset();
+    }
+
+    private void OnStageOver(int attackerId)
+    {
+        _roundModel.WinnerList.Add(attackerId switch
+        {
+            0 => 0,
+            1 => 2,
+            2 => 1,
+            _ => throw new Exception()
+        });
+        _roundModel.StageIndex++;
     }
 }

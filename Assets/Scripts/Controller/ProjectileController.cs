@@ -9,12 +9,12 @@ public class ProjectileController : MonoBehaviour
     [SerializeField]
     private float _speed;
     private Sequence _seq;
-    private GameObject _owner;
+    private int _ownerId;
     private float _duration;
 
-    public void Init(bool isHeadingRight, float duration, GameObject owner)
+    public void Init(bool isHeadingRight, float duration, int ownerId)
     {
-        _owner = owner;
+        _ownerId = ownerId;
         _duration = duration;
 
         var (dist, _) = Camera.main.GetFrustum();
@@ -26,7 +26,7 @@ public class ProjectileController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player" && _owner != other.gameObject)
+        if (other.tag == "Player" && _ownerId != other.GetComponent<PlayerController>().Id)
         {
             other.GetComponent<PlayerController>().GetStunned(_duration);
             _seq.Kill();
