@@ -11,6 +11,8 @@ public class GameSceneLifetimeCycle : LifetimeCycle
     [SerializeField]
     private TreeController _treeController;
     [SerializeField]
+    private TreeView _treeView;
+    [SerializeField]
     private KeyInputSender _keyInputSender1;
     [SerializeField]
     private KeyInputSender _keyInputSender2;
@@ -25,6 +27,7 @@ public class GameSceneLifetimeCycle : LifetimeCycle
 
         // Initialize controllers
         _treeController.Init(treeModel);
+        _treeView.Init(treeModel);
         _keyInputSender1.Init();
         _keyInputSender2.Init();
         _playerController1.Init(playerModel1);
