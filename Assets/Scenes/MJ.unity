@@ -398,7 +398,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e6d244096d44c44892fc02f2729320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackKey: 108
+  _keyPool:
+  - InputKey: 108
+    Action: 1
 --- !u!1 &1938267070
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,7 +491,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e6d244096d44c44892fc02f2729320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackKey: 97
+  _keyPool:
+  - InputKey: 97
+    Action: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
