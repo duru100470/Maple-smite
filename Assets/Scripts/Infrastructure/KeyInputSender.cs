@@ -8,33 +8,34 @@ public class KeyInputSender : MonoBehaviour
     [SerializeField]
     private KeyCode _attackKey;
     [SerializeField]
-    private Dictionary<KeyType, KeyCode> _keyPool = new();
-    public event Action<KeyCode> OnKeyPressed;
+    private Dictionary<KeyCode, KeyType> _keyPool = new();
+    public event Action<KeyType> OnKeyPressed;
 
     public void Init()
     {
-        _keyPool.Add(KeyType.Attack, _attackKey);
+        _keyPool.Add(_attackKey, KeyType.Attack);
     }
 
     private void Update()
     {
-        var newlyPressedKey = KeyCode.None;
+        var newlyPressedKey = KeyType.None;
 
-        foreach (var candidate in _keyPool.Values)
+        foreach (var candidate in _keyPool.Keys)
         {
             if (Input.GetKeyDown(candidate))
             {
-                newlyPressedKey = candidate;
+                newlyPressedKey = _keyPool[candidate];
             }
         }
 
-        if (newlyPressedKey == KeyCode.None) return;
+        if (newlyPressedKey == KeyType.None) return;
 
-        OnKeyPressed.Invoke(newlyPressedKey);
+        OnKeyPressed?.Invoke(newlyPressedKey);
     }
 }
 
 public enum KeyType
 {
+    None,
     Attack
 }

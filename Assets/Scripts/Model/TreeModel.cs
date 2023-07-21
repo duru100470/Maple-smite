@@ -12,11 +12,11 @@ public class TreeModel
         get => _health;
         set
         {
-            OnHpChanged.Invoke(_health, value);
+            OnHpChanged?.Invoke(_health, value);
             _health = value;
 
             if (_health <= 0)
-                OnTreeDestroyed.Invoke();
+                OnTreeDestroyed?.Invoke();
         }
     }
 

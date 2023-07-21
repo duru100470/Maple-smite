@@ -14,5 +14,15 @@ public class TreeController : MonoBehaviour
     public void GetDamage(int amount)
     {
         _treeModel.Health -= amount;
+        Debug.Log(_treeModel.Health);
+    }
+
+    private IEnumerator GetLinearDamage()
+    {
+        while (true)
+        {
+            GetDamage(10);
+            yield return new WaitForSeconds(.5f);
+        }
     }
 }
