@@ -6,25 +6,22 @@ using UnityEngine;
 public class KeyInputSender : MonoBehaviour
 {
     [SerializeField]
-    private KeyCode _attackKey;
-    [SerializeField]
-    private Dictionary<KeyCode, KeyType> _keyPool = new();
+    private List<KeySetting> _keyPool = new();
     public event Action<KeyType> OnKeyPressed;
 
     public void Init()
     {
-        _keyPool.Add(_attackKey, KeyType.Attack);
     }
 
     private void Update()
     {
         var newlyPressedKey = KeyType.None;
 
-        foreach (var candidate in _keyPool.Keys)
+        foreach (var candidate in _keyPool)
         {
-            if (Input.GetKeyDown(candidate))
+            if (Input.GetKeyDown(candidate.InputKey))
             {
-                newlyPressedKey = _keyPool[candidate];
+                newlyPressedKey = candidate.Action;
             }
         }
 
@@ -34,8 +31,23 @@ public class KeyInputSender : MonoBehaviour
     }
 }
 
+[Serializable]
+public struct KeySetting
+{
+    public KeyCode InputKey;
+    public KeyType Action;
+
+    public KeySetting(KeyCode inputKey, KeyType action)
+    {
+        InputKey = inputKey;
+        Action = action;
+    }
+}
+
 public enum KeyType
 {
     None,
-    Attack
+    Axe,
+    Throw,
+    Jump
 }
