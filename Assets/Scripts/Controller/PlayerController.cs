@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -23,12 +24,16 @@ public class PlayerController : MonoBehaviour
         switch (keyType)
         {
             case KeyType.Axe:
-                if (_curState == PlayerState.Idle) break;
+                if (_curState != PlayerState.Idle) break;
                 StartCoroutine(DoAxing());
                 break;
             case KeyType.Throw:
-                if (_curState == PlayerState.Idle) break;
+                if (_curState != PlayerState.Idle) break;
                 StartCoroutine(DoThrowing());
+                break;
+            case KeyType.Jump:
+                if (_curState != PlayerState.Idle) break;
+                StartCoroutine(DoJump());
                 break;
         }
     }
@@ -51,7 +56,10 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator DoJump()
     {
-        // TODO: 점프 구현
+        var seq = DOTween.Sequence();
+        seq.Append(transform.DOLocalMoveY(transform.position.y + _playerModel.JumpHeight, _playerModel.JumpTime / 2).SetEase(Ease.OutQuad));
+        seq.Append(transform.DOLocalMoveY(transform.position.y, _playerModel.JumpTime / 2).SetEase(Ease.InQuad));
+
         _curState = PlayerState.Act;
         yield return new WaitForSeconds(_playerModel.JumpCooldown);
         _curState = PlayerState.Idle;
