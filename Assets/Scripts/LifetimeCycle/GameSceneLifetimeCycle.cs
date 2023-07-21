@@ -11,9 +11,15 @@ public class GameSceneLifetimeCycle : LifetimeCycle
     [SerializeField]
     private TreeController _treeController;
     [SerializeField]
+    private TreeView _treeView;
+    [SerializeField]
     private KeyInputSender _keyInputSender1;
     [SerializeField]
     private KeyInputSender _keyInputSender2;
+    [SerializeField]
+    private SkillView _skillView1;
+    [SerializeField]
+    private SkillView _skillView2;
 
     public override void Initialize()
     {
@@ -25,10 +31,13 @@ public class GameSceneLifetimeCycle : LifetimeCycle
 
         // Initialize controllers
         _treeController.Init(treeModel);
+        _treeView.Init(treeModel);
         _keyInputSender1.Init();
         _keyInputSender2.Init();
         _playerController1.Init(playerModel1);
         _playerController2.Init(playerModel2);
+        _skillView1.Init(playerModel1);
+        _skillView2.Init(playerModel2);
     }
 
     public void Dispose()
