@@ -47,5 +47,7 @@ public struct KeySetting
 public enum KeyType
 {
     None,
-    Attack
+    Axe,
+    Throw,
+    Jump
 }
