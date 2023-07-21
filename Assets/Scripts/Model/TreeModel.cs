@@ -13,7 +13,7 @@ public class TreeModel
         set
         {
             OnHpChanged?.Invoke(_health, value);
-            _health = value;
+            _health = Math.Max(value, 0);
 
             if (_health <= 0)
                 OnTreeDestroyed?.Invoke();
