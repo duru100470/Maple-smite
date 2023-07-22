@@ -767,6 +767,7 @@ GameObject:
   - component: {fileID: 511642878}
   - component: {fileID: 511642876}
   - component: {fileID: 511642877}
+  - component: {fileID: 511642879}
   m_Layer: 0
   m_Name: PlayerController2
   m_TagString: Untagged
@@ -858,6 +859,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &511642879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511642875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e7e358dbd4abd74daeba0f693590cf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clips:
+  - {fileID: 11400000, guid: a120cf0af307def48bca355bd2cdbeab, type: 2}
+  - {fileID: 11400000, guid: f5a3a4956a0c4574bbec6e376b231338, type: 2}
+  _spriteRenderer: {fileID: 0}
 --- !u!1 &515022722
 GameObject:
   m_ObjectHideFlags: 0
@@ -2342,6 +2359,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1436876404}
   - component: {fileID: 1436876402}
+  - component: {fileID: 1436876405}
   - component: {fileID: 1436876403}
   m_Layer: 0
   m_Name: PlayerController1
@@ -2408,7 +2426,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5000
-  m_Sprite: {fileID: 21300000, guid: 9f750b0e9f22580428b5b5f12f928332, type: 3}
+  m_Sprite: {fileID: 1298416270, guid: e4df6b8c068317b49b2ad1162b500eb5, type: 3}
   m_Color: {r: 0.4192872, g: 0.6886536, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2434,6 +2452,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1436876405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436876401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e7e358dbd4abd74daeba0f693590cf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clips:
+  - {fileID: 11400000, guid: a120cf0af307def48bca355bd2cdbeab, type: 2}
+  - {fileID: 11400000, guid: f5a3a4956a0c4574bbec6e376b231338, type: 2}
+  _spriteRenderer: {fileID: 0}
 --- !u!1 &1462764347
 GameObject:
   m_ObjectHideFlags: 0

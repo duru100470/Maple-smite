@@ -10,6 +10,7 @@ public class TreeController : MonoBehaviour
 
     public void Init(TreeModel treeModel)
     {
+        Debug.Log(treeModel);
         _treeModel = treeModel;
         _treeModel.OnTreeDestroyed += OnTreeDestroyed;
     }
@@ -22,6 +23,7 @@ public class TreeController : MonoBehaviour
 
     public void GetDamage(int amount, int attackerId)
     {
+        Debug.Log(_treeModel);
         _treeModel.LastAttackerId = attackerId;
         _treeModel.Health -= amount;
     }

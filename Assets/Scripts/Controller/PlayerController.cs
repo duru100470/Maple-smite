@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
         _playerModel.SkillDict[KeyType.Axe] = (PlayerController p) =>
         {
             if (_curState != PlayerState.Idle || _playerModel.Modified().IsAxeCooldown) return;
+            GetComponent<SpriteAnimator>().Play(1, _playerModel.Modified().AxeMotionTime);
             StartCoroutine(DoAxing());
             StartCoroutine(SetAxeCooldown());
         };
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour
     {
         StopAllCoroutines();
 
+        GetComponent<SpriteAnimator>().Play(0);
         _playerModel.IsAxeCooldown = false;
         _playerModel.IsThrowCooldown = false;
         _curState = PlayerState.Idle;
@@ -78,6 +80,7 @@ public class PlayerController : MonoBehaviour
         _curState = PlayerState.Act;
         yield return new WaitForSeconds(_playerModel.Modified().AxeMotionTime);
         _curState = PlayerState.Idle;
+        GetComponent<SpriteAnimator>().Play(0);
     }
 
     private IEnumerator SetAxeCooldown()
