@@ -32,9 +32,6 @@ public class GameSceneLifetimeCycle : LifetimeCycle
         var roundModel = GetModelFromJson<RoundModel>("Text/round");
         var treeModel = new TreeModel();
 
-        // Test Code
-        KnowHowManager.Inst.KnowHowBuffList1.Add(new PunchingBag());
-
         // Initialize controllers
         _keyInputSender1.Init();
         _keyInputSender2.Init();
