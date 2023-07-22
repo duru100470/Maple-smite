@@ -16,8 +16,6 @@ public class RoundModel
     public List<int> TreeHealthByStage { get; set; } = new();
     // 라운드 별 나무 피다는 퍼센트
     public List<float> TreeDamageByStage { get; set; } = new();
-    // 라운드 별 변수 목록
-    public List<Accident[]> AccidentListByStage { get; set; } = new();
     // 최대 몇 스테이지인지
     public int MaxStageIndex { get; set; } = 5;
     // 증강 선택 시간
@@ -35,10 +33,4 @@ public class RoundModel
     }
 
     public event Action<int, int> OnStageChanged;
-}
-
-public enum Accident
-{
-    Thunder,
-    Sunlight
 }

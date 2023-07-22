@@ -44,10 +44,10 @@ public class RoundController : MonoBehaviour
 
     private void CheckAccidentShouldHappen(int _, int health)
     {
-        if (((float)(_treeModel.Health) / (float)(_treeModel.MaxHealth)) < _accidentPercent && !_isAccidentHappen)
+        if (((float)(_treeModel.Health) / (float)(_treeModel.MaxHealth) < _accidentPercent) && !_isAccidentHappen)
         {
-            AccidentManager.Inst.OccurAccident();
             _isAccidentHappen = true;
+            AccidentManager.Inst.OccurAccident(_roundModel.StageIndex);
         }
     }
 

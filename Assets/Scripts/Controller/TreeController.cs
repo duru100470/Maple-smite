@@ -6,6 +6,7 @@ using UnityEngine;
 public class TreeController : MonoBehaviour
 {
     private TreeModel _treeModel;
+    public float Percent { get; set; }
 
     public void Init(TreeModel treeModel)
     {
@@ -15,7 +16,8 @@ public class TreeController : MonoBehaviour
 
     public void Reset(float percent)
     {
-        StartCoroutine(GetLinearDamage(percent));
+        Percent = percent;
+        StartCoroutine(GetLinearDamage());
     }
 
     public void GetDamage(int amount, int attackerId)
@@ -34,12 +36,12 @@ public class TreeController : MonoBehaviour
     {
     }
 
-    private IEnumerator GetLinearDamage(float percent)
+    private IEnumerator GetLinearDamage()
     {
         while (_treeModel.Health > _treeModel.MaxHealth * 0.15f)
         {
             yield return new WaitForSeconds(1f);
-            GetDamagePercentage(percent, 0);
+            GetDamagePercentage(Percent, 0);
         }
     }
 }
