@@ -15,9 +15,11 @@ public class RoundController : MonoBehaviour
     [SerializeField]
     private PlayerController _playerController2;
 
-    public void Init(RoundModel roundModel)
+    public void Init(RoundModel roundModel, TreeModel treeModel)
     {
         _roundModel = roundModel;
+        _treeModel = treeModel;
+        _treeModel.OnTreeDestroyed += OnStageOver;
 
         StartNewRound();
     }
@@ -27,10 +29,7 @@ public class RoundController : MonoBehaviour
     {
         var roundIdx = _roundModel.StageIndex;
 
-        _treeModel = new TreeModel(_roundModel.TreeHealthByStage[roundIdx]);
-        _treeModel.OnTreeDestroyed += OnStageOver;
-        _treeController.Init(_treeModel);
-
+        _treeModel.Reset(_roundModel.TreeHealthByStage[roundIdx]);
         _playerController1.Reset();
         _playerController2.Reset();
     }

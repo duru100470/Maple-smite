@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class TreeModel
 {
     private int _health;
@@ -21,7 +22,9 @@ public class TreeModel
         }
     }
 
-    public TreeModel(int health)
+    public TreeModel() { }
+
+    public void Reset(int health)
     {
         _health = health;
     }

@@ -30,16 +30,19 @@ public class GameSceneLifetimeCycle : LifetimeCycle
         var playerModel1 = GetModelFromJson<PlayerModel>("Text/player1");
         var playerModel2 = GetModelFromJson<PlayerModel>("Text/player2");
         var roundModel = GetModelFromJson<RoundModel>("Text/round");
+        var treeModel = new TreeModel();
 
         // Initialize controllers
         _keyInputSender1.Init();
         _keyInputSender2.Init();
         _playerController1.Init(playerModel1);
         _playerController2.Init(playerModel2);
+        _treeController.Init(treeModel);
         _skillView1.Init(playerModel1);
         _skillView2.Init(playerModel2);
 
-        _roundController.Init(roundModel);
+        _roundController.Init(roundModel, treeModel);
+        _treeView.Init(treeModel);
     }
 
     private T GetModelFromJson<T>(string path)
