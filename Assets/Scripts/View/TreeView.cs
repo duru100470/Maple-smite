@@ -55,10 +55,8 @@ public class TreeView : MonoBehaviour
 
     public void Init(TreeModel treeModel)
     {
-        _screen_Width = Screen.width;
-        _screen_Height = Screen.height;
-
-        Debug.Log("Sceen Size : (" + _screen_Width + ", " + _screen_Height + ")");
+        _screen_Width = 1920f;
+        _screen_Height = 1080f;
 
         _treeModel = treeModel;
 
