@@ -42,8 +42,8 @@ public class TreeController : MonoBehaviour
     {
         while (_treeModel.Health > _treeModel.MaxHealth * 0.15f)
         {
-            yield return new WaitForSeconds(2f);
-            GetDamagePercentage(Percent, 0);
+            yield return new WaitForSeconds(.25f);
+            GetDamagePercentage(Percent / 4, 0);
         }
     }
 }

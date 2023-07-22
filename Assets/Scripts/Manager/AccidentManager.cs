@@ -8,6 +8,8 @@ public class AccidentManager : SingletonBehavior<AccidentManager>
 {
     [SerializeField]
     private TreeController _treeController;
+    [SerializeField]
+    private AccidentView _accidentView;
 
     public void OccurAccident(int stageIndex)
     {
@@ -18,15 +20,19 @@ public class AccidentManager : SingletonBehavior<AccidentManager>
         {
             case Accident.Thunder:
                 StartCoroutine(Thunder());
+                _accidentView.PrintMessage("Thunder is coming!");
                 break;
             case Accident.Sunlight:
                 StartCoroutine(Sunlight(stageIndex));
+                _accidentView.PrintMessage("Sunlight is coming!");
                 break;
             case Accident.WoodCutter:
                 StartCoroutine(Woodcutter());
+                _accidentView.PrintMessage("Woodcutter is coming!");
                 break;
             case Accident.Rain:
                 StartCoroutine(Rain());
+                _accidentView.PrintMessage("Rain is coming!");
                 break;
         }
     }

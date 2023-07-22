@@ -96,7 +96,7 @@ public class TreeView : MonoBehaviour
 
         DamageBar();
 
-        GetDamageUITween();
+        GetDamageUITween((float)damage / (float)currentHealth);
     }
 
     private void UpdateDamageUI(int damage, Slider slider1, Slider slider2, RectTransform ui1, RectTransform ui2)
@@ -136,13 +136,13 @@ public class TreeView : MonoBehaviour
         }
     }
 
-    private void GetDamageUITween()
+    private void GetDamageUITween(float degree)
     {
         QuiAllActions();
 
         _damageSeq = DOTween.Sequence().Pause().SetUpdate(true)
         .Append(_tree_HP_UI.transform.DOScale(Vector3.one, 0f))
-        .Append(_tree_HP_UI.transform.DOPunchScale(_damageSeq_TO, _damageSeq_Duration, _damageSeq_Vibrato).SetEase(Ease.OutQuad))
+        .Append(_tree_HP_UI.transform.DOPunchScale(_damageSeq_TO * Mathf.Min(degree, 1.5f), _damageSeq_Duration, _damageSeq_Vibrato).SetEase(Ease.OutQuad))
         .OnComplete(() =>
         {
 
