@@ -10,12 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a2645988c2ff114d93166b7fb50c1bf, type: 3}
-  m_Name: PlayerIdle
+  m_Name: Player1Throw
   m_EditorClassIdentifier: 
-  IsLoop: 1
+  IsLoop: 0
   sprites:
-  - {fileID: 1298416270, guid: e4df6b8c068317b49b2ad1162b500eb5, type: 3}
-  - {fileID: 377420659, guid: e4df6b8c068317b49b2ad1162b500eb5, type: 3}
-  - {fileID: -1622573377, guid: e4df6b8c068317b49b2ad1162b500eb5, type: 3}
-  - {fileID: -1922490257, guid: e4df6b8c068317b49b2ad1162b500eb5, type: 3}
+  - {fileID: 1014974429, guid: dfc5f062dc06d5e419cbfa9d66d385cd, type: 3}
+  - {fileID: -1907395230, guid: dfc5f062dc06d5e419cbfa9d66d385cd, type: 3}
   interval: 0.25

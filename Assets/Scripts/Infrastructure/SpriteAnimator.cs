@@ -8,10 +8,13 @@ public class SpriteAnimator : MonoBehaviour
     private List<AnimationClip> _clips;
     [SerializeField]
     private SpriteRenderer _spriteRenderer;
+    [SerializeField]
+    private bool _autoStart = false;
 
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        if (_autoStart) Play(0);
     }
 
     public void Play(int index)

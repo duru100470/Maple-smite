@@ -51,12 +51,14 @@ public class PlayerController : MonoBehaviour
         _playerModel.SkillDict[KeyType.Throw] = (PlayerController p) =>
         {
             if (_curState != PlayerState.Idle || _playerModel.Modified().IsThrowCooldown) return;
+            GetComponent<SpriteAnimator>().Play(2, _playerModel.Modified().ThrowMotionTime);
             StartCoroutine(DoThrowing());
             StartCoroutine(SetThrowCooldown());
         };
         _playerModel.SkillDict[KeyType.Jump] = (PlayerController p) =>
         {
             if (_curState != PlayerState.Idle || _playerModel.Modified().IsJumpCooldown) return;
+            GetComponent<SpriteAnimator>().Play(3, _playerModel.Modified().JumpTime);
             StartCoroutine(DoJump());
             StartCoroutine(SetJumpCooldown());
         };
@@ -97,12 +99,15 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator DoThrowing()
     {
+        _curState = PlayerState.Act;
+
+        yield return new WaitForSeconds(_playerModel.Modified().ThrowMotionTime / 2);
         var go = Instantiate(_stoneObject, transform.position, Quaternion.identity);
         go.GetComponent<ProjectileController>().Init(_isHeadingRight, _playerModel.Modified().ThrowStunDuration, Id);
 
-        _curState = PlayerState.Act;
-        yield return new WaitForSeconds(_playerModel.Modified().ThrowMotionTime);
+        yield return new WaitForSeconds(_playerModel.Modified().ThrowMotionTime / 2);
         _curState = PlayerState.Idle;
+        GetComponent<SpriteAnimator>().Play(0);
     }
 
     public IEnumerator SetThrowCooldown()
@@ -121,6 +126,7 @@ public class PlayerController : MonoBehaviour
         _curState = PlayerState.Act;
         yield return new WaitForSeconds(_playerModel.Modified().JumpTime);
         _curState = PlayerState.Idle;
+        GetComponent<SpriteAnimator>().Play(0);
     }
 
     public IEnumerator SetJumpCooldown()
@@ -133,6 +139,7 @@ public class PlayerController : MonoBehaviour
     public IEnumerator DoHealTree()
     {
         _treeController.GetDamagePercentage(-0.05f, Id);
+        GetComponent<SpriteAnimator>().Play(3, _playerModel.Modified().JumpTime);
 
         _curState = PlayerState.Act;
         yield return new WaitForSeconds(_playerModel.Modified().JumpTime);
@@ -142,6 +149,7 @@ public class PlayerController : MonoBehaviour
     public IEnumerator DoAttackTree()
     {
         _treeController.GetDamagePercentage(0.05f, Id);
+        GetComponent<SpriteAnimator>().Play(2, _playerModel.Modified().ThrowMotionTime);
 
         _curState = PlayerState.Act;
         yield return new WaitForSeconds(_playerModel.Modified().ThrowMotionTime);
@@ -154,6 +162,7 @@ public class PlayerController : MonoBehaviour
         StopCoroutine(DoThrowing());
         StopCoroutine(DoJump());
         StartCoroutine(GetStunnedCoroutine(duration));
+        GetComponent<SpriteAnimator>().Play(4);
     }
 
     private IEnumerator GetStunnedCoroutine(float duration)
@@ -161,6 +170,7 @@ public class PlayerController : MonoBehaviour
         _curState = PlayerState.Stun;
         yield return new WaitForSeconds(duration);
         _curState = PlayerState.Idle;
+        GetComponent<SpriteAnimator>().Play(0);
     }
 }
 
