@@ -54,4 +54,9 @@ public class PlayerModel
     private Dictionary<KeyType, Action<PlayerController>> _skillDict = new();
     public Dictionary<KeyType, Action<PlayerController>> SkillDict => _skillDict;
 
+    private List<IKnowHow> _knowHowList = new();
+    public List<IKnowHow> KnowHowList => _knowHowList;
+
+    public void ApplyKnowHow()
+        => _knowHowList.ForEach(k => k.ApplyEffect(this));
 }
