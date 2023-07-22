@@ -664,6 +664,8 @@ MonoBehaviour:
   _keyPool:
   - InputKey: 97
     Action: 1
+  - InputKey: 100
+    Action: 3
 --- !u!4 &441865092
 Transform:
   m_ObjectHideFlags: 0
