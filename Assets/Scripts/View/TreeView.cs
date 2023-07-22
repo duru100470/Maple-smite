@@ -23,6 +23,8 @@ public class TreeView : MonoBehaviour
     private RectTransform _hp_1P;
     [field: SerializeField]
     private RectTransform _hp_2P;
+    [field: SerializeField]
+    private RectTransform _border;
     #endregion
 
     #region Damage Bar.
@@ -70,23 +72,25 @@ public class TreeView : MonoBehaviour
 
     private void SetHPUI(RectTransform ui1, RectTransform ui2, Slider slider, int direction)
     {
-        ui1.sizeDelta = new Vector2(_screen_Width * 0.5f, ui1.sizeDelta.y);
-        ui1.anchoredPosition = new Vector2(direction * _screen_Width * 0.25f, ui1.anchoredPosition.y);
+        ui1.sizeDelta = new Vector2(_screen_Width * 0.35f, ui1.sizeDelta.y);
+        ui1.anchoredPosition = new Vector2(direction * 395f, ui1.anchoredPosition.y);
         slider.maxValue = _treeModel.Health;
         slider.value = _treeModel.Health;
         slider.minValue = 0;
-        ui2.anchoredPosition = new Vector2(0, ui2.anchoredPosition.y);
+        ui2.sizeDelta = new Vector2(0, ui2.sizeDelta.y);
     }
 
     private void UpdateAllHPUI(int prevHealth, int currentHealth)
     {
         int damage = prevHealth - currentHealth;
 
+        if (currentHealth < 0f) damage = prevHealth;
+
         UpdateDamageUI(damage, _hp_Slider_1P, _damage_Slider_1P, _hp_1P, _damage_1P);
         UpdateDamageUI(damage, _hp_Slider_2P, _damage_Slider_2P, _hp_2P, _damage_2P);
 
-        UpdateDamageAnchor(_damage_1P, 1);
-        UpdateDamageAnchor(_damage_2P, -1);
+        UpdateDamageAnchor(_damage_1P, _hp_1P, 1);
+        UpdateDamageAnchor(_damage_2P, _hp_2P, -1);
 
         if (!_firstAttack) _firstAttack = true;
 
@@ -97,7 +101,7 @@ public class TreeView : MonoBehaviour
 
     private void UpdateDamageUI(int damage, Slider slider1, Slider slider2, RectTransform ui1, RectTransform ui2)
     {
-        slider1.value = _treeModel.Health;
+        slider1.value = _treeModel.Health - damage;
 
         // 데미지 크기만큼 데미지 슬라이더 생성.
         ui2.sizeDelta = new Vector2(ui1.sizeDelta.x * (damage / slider1.maxValue), ui2.sizeDelta.y);
@@ -105,10 +109,10 @@ public class TreeView : MonoBehaviour
         slider2.maxValue = damage;
     }
 
-    private void UpdateDamageAnchor(RectTransform ui, int direction)
+    private void UpdateDamageAnchor(RectTransform ui1, RectTransform ui2, int direction)
     {
-        if (!_firstAttack) ui.anchoredPosition += new Vector2(ui.sizeDelta.x * 0.5f, 0) * direction;
-        else ui.anchoredPosition += new Vector2(ui.sizeDelta.x, 0) * direction;
+        if (!_firstAttack) ui1.anchoredPosition = new Vector2((ui1.sizeDelta.x * 0.5f + direction * ui2.anchoredPosition.x - ui2.sizeDelta.x * 0.5f) * direction, ui1.anchoredPosition.y);
+        else ui1.anchoredPosition += new Vector2(ui1.sizeDelta.x, 0) * direction;
     }
 
     private void DamageBar()
