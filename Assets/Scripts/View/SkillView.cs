@@ -88,7 +88,7 @@ public class SkillView : MonoBehaviour
     private IEnumerator CoolDownTimerCoroutine(GameObject icon, Image mask, bool trigger)
     {
         trigger = true;
-        while(_timer > 0)
+        while (_timer > 0)
         {
             _timer -= Time.deltaTime;
             _effectTime -= Time.deltaTime;

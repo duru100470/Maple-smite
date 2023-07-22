@@ -1675,11 +1675,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _keyInputSender: {fileID: 2019540620}
+  _axeIcon: {fileID: 1554464445}
+  _throwIcon: {fileID: 64703087}
+  _jumpIcon: {fileID: 896498365}
   _mask01: {fileID: 1554464448}
   _mask02: {fileID: 64703090}
   _mask03: {fileID: 896498366}
-  _timer: 0
-  _coolTime: 3
+  _skillSeq_TO: {x: 0.1, y: 0.1, z: 0.1}
+  _skillSeq_Duration: 0.2
+  _skillSeq_Vibrato: 0
 --- !u!224 &800233086
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2199,6 +2203,7 @@ MonoBehaviour:
   _hp_Slider_2P: {fileID: 667547862}
   _hp_1P: {fileID: 1679425253}
   _hp_2P: {fileID: 667547861}
+  _border: {fileID: 0}
   _damage_Slider_1P: {fileID: 1169402805}
   _damage_Slider_2P: {fileID: 390314067}
   _damage_1P: {fileID: 1169402804}
@@ -3507,11 +3512,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _keyInputSender: {fileID: 441865091}
+  _axeIcon: {fileID: 1462764347}
+  _throwIcon: {fileID: 1821203975}
+  _jumpIcon: {fileID: 276609037}
   _mask01: {fileID: 1462764349}
   _mask02: {fileID: 1821203977}
   _mask03: {fileID: 276609039}
-  _timer: 0
-  _coolTime: 3
+  _skillSeq_TO: {x: 0.1, y: 0.1, z: 0.1}
+  _skillSeq_Duration: 0.2
+  _skillSeq_Vibrato: 0
 --- !u!1 &2019540619
 GameObject:
   m_ObjectHideFlags: 0
