@@ -36,6 +36,11 @@ public class PlayerController : MonoBehaviour
         _curState = PlayerState.Idle;
         _keyInputSender.OnKeyPressed += PressKey;
 
+        if (_isHeadingRight)
+        {
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+        }
+
         _playerModel.SkillDict[KeyType.Axe] = (PlayerController p) =>
         {
             if (_curState != PlayerState.Idle || _playerModel.Modified().IsAxeCooldown) return;

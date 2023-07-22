@@ -787,7 +787,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc47aab63afdc0428d1eb80182a1bb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isHeadingRight: 1
+  _isHeadingRight: 0
   _id: 2
   _keyInputSender: {fileID: 2019540620}
   _treeController: {fileID: 1483862549}
@@ -833,8 +833,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5000
-  m_Sprite: {fileID: 21300000, guid: 9f750b0e9f22580428b5b5f12f928332, type: 3}
-  m_Color: {r: 1, g: 0.36268342, b: 0.36268342, a: 1}
+  m_Sprite: {fileID: 1298416270, guid: e4df6b8c068317b49b2ad1162b500eb5, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2318,7 +2318,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 2.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2380,7 +2380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc47aab63afdc0428d1eb80182a1bb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isHeadingRight: 0
+  _isHeadingRight: 1
   _id: 1
   _keyInputSender: {fileID: 441865091}
   _treeController: {fileID: 1483862549}
@@ -2427,7 +2427,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5000
   m_Sprite: {fileID: 1298416270, guid: e4df6b8c068317b49b2ad1162b500eb5, type: 3}
-  m_Color: {r: 0.4192872, g: 0.6886536, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
