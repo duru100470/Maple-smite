@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private int _id;
 
     public int Id => _id;
+    public PlayerState CurState => _curState;
 
     private PlayerModel _playerModel;
     [Header("Dependencies")]
@@ -21,6 +22,8 @@ public class PlayerController : MonoBehaviour
     private KeyInputSender _keyInputSender;
     [SerializeField]
     private TreeController _treeController;
+
+    public PlayerModel PlayerModel => _playerModel;
 
     [Header("Prefabs")]
     [SerializeField]
@@ -47,8 +50,9 @@ public class PlayerController : MonoBehaviour
         };
         _playerModel.SkillDict[KeyType.Jump] = (PlayerController p) =>
         {
-            if (_curState != PlayerState.Idle) return;
+            if (_curState != PlayerState.Idle || _playerModel.Modified().IsJumpCooldown) return;
             StartCoroutine(DoJump());
+            StartCoroutine(SetJumpCooldown());
         };
 
         Reset();
@@ -93,7 +97,7 @@ public class PlayerController : MonoBehaviour
         _curState = PlayerState.Idle;
     }
 
-    private IEnumerator SetThrowCooldown()
+    public IEnumerator SetThrowCooldown()
     {
         _playerModel.IsThrowCooldown = true;
         yield return new WaitForSeconds(_playerModel.Modified().ThrowCooldown);
@@ -111,11 +115,29 @@ public class PlayerController : MonoBehaviour
         _curState = PlayerState.Idle;
     }
 
-    private IEnumerator SetJumpCooldown()
+    public IEnumerator SetJumpCooldown()
     {
         _playerModel.IsJumpCooldown = true;
         yield return new WaitForSeconds(_playerModel.Modified().JumpCooldown);
         _playerModel.IsJumpCooldown = false;
+    }
+
+    public IEnumerator DoHealTree()
+    {
+        _treeController.GetDamagePercentage(-0.05f, Id);
+
+        _curState = PlayerState.Act;
+        yield return new WaitForSeconds(_playerModel.Modified().JumpTime);
+        _curState = PlayerState.Idle;
+    }
+
+    public IEnumerator DoAttackTree()
+    {
+        _treeController.GetDamagePercentage(0.05f, Id);
+
+        _curState = PlayerState.Act;
+        yield return new WaitForSeconds(_playerModel.Modified().ThrowMotionTime);
+        _curState = PlayerState.Idle;
     }
 
     public void GetStunned(float duration)

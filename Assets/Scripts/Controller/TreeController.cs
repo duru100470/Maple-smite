@@ -17,6 +17,12 @@ public class TreeController : MonoBehaviour
         _treeModel.Health -= amount;
     }
 
+    public void GetDamagePercentage(float percent, int attackerId)
+    {
+        _treeModel.LastAttackerId = attackerId;
+        _treeModel.Health -= (int)(_treeModel.Health * percent);
+    }
+
     private IEnumerator GetLinearDamage()
     {
         while (true)
