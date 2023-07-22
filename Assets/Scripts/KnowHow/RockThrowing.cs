@@ -16,7 +16,7 @@ public class RockThrowing : IKnowHowBuff
     }
 
     public KnowHowType GetKnowHowType()
-        => KnowHowType.LEGENDARY_F;
+        => KnowHowType.LEGENDARY_D;
 
     public string GetName()
     {

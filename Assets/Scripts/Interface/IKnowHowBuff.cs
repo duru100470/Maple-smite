@@ -16,7 +16,5 @@ public enum KnowHowType
     LEGENDARY_A,
     LEGENDARY_B,
     LEGENDARY_C,
-    LEGENDARY_D,
-    LEGENDARY_E,
-    LEGENDARY_F
+    LEGENDARY_D
 }

@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsLoop: 0
   sprites:
-  - {fileID: -1194619964, guid: a422d648e3087454d8e1a986fa733dd8, type: 3}
   - {fileID: -663365383, guid: a422d648e3087454d8e1a986fa733dd8, type: 3}
   - {fileID: -1147279161, guid: a422d648e3087454d8e1a986fa733dd8, type: 3}
   - {fileID: -721122442, guid: a422d648e3087454d8e1a986fa733dd8, type: 3}

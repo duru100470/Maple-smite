@@ -9,6 +9,8 @@ public class KnowHowManager : SingletonBehavior<KnowHowManager>
     private List<IKnowHowDebuff> _knowHowDebuffList1 = new();
     private List<IKnowHowDebuff> _knowHowDebuffList2 = new();
 
+    public List<IKnowHowBuff> KnowHowBuffList1 => _knowHowBuffList1;
+
     public List<IKnowHow> GetKnowHowEffectList(int id)
     {
         var buffs = id switch

@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [Header("Fields")]
     [SerializeField]
     private bool _isHeadingRight;
+    private IEnumerator _stunCoroutine;
     private PlayerState _curState;
     [SerializeField]
     private int _id;
@@ -147,13 +148,15 @@ public class PlayerController : MonoBehaviour
         _playerModel.IsJumpCooldown = false;
     }
 
-    public IEnumerator DoHealTree()
+    public void DoCleans()
     {
-        _treeController.GetDamagePercentage(-0.05f, Id);
-        GetComponent<SpriteAnimator>().Play(3, _playerModel.Modified().JumpTime);
+        if (_stunCoroutine != null)
+        {
+            StopCoroutine(_stunCoroutine);
+            _stunCoroutine = null;
+        }
 
-        _curState = PlayerState.Act;
-        yield return new WaitForSeconds(_playerModel.Modified().JumpTime);
+        GetComponent<SpriteAnimator>().Play(0);
         _curState = PlayerState.Idle;
     }
 
@@ -172,7 +175,9 @@ public class PlayerController : MonoBehaviour
         StopCoroutine(DoAxing());
         StopCoroutine(DoThrowing());
         StopCoroutine(DoJump());
-        StartCoroutine(GetStunnedCoroutine(duration));
+
+        _stunCoroutine = GetStunnedCoroutine(duration);
+        StartCoroutine(_stunCoroutine);
         GetComponent<SpriteAnimator>().Play(4);
     }
 

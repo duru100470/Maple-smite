@@ -18,7 +18,7 @@ public class GoldAxeSilverAxe : IKnowHow
     }
 
     public KnowHowType GetKnowHowType()
-        => KnowHowType.LEGENDARY_D;
+        => KnowHowType.LEGENDARY_C;
 
     public string GetName()
     {
