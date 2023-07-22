@@ -9,11 +9,10 @@ public class PlayerController : MonoBehaviour
     [Header("Fields")]
     [SerializeField]
     private bool _isHeadingRight;
-    private bool _isAxeCooldown = false;
-    private bool _isThrowCooldown = false;
     private PlayerState _curState;
     [SerializeField]
     private int _id;
+
     public int Id => _id;
 
     private PlayerModel _playerModel;
@@ -33,6 +32,24 @@ public class PlayerController : MonoBehaviour
         _curState = PlayerState.Idle;
         _keyInputSender.OnKeyPressed += PressKey;
 
+        _playerModel.SkillDict[KeyType.Axe] = (PlayerController p) =>
+        {
+            if (_curState != PlayerState.Idle || _playerModel.IsAxeCooldown) return;
+            StartCoroutine(DoAxing());
+            StartCoroutine(SetAxeCooldown());
+        };
+        _playerModel.SkillDict[KeyType.Throw] = (PlayerController p) =>
+        {
+            if (_curState != PlayerState.Idle || _playerModel.IsThrowCooldown) return;
+            StartCoroutine(DoThrowing());
+            StartCoroutine(SetThrowCooldown());
+        };
+        _playerModel.SkillDict[KeyType.Jump] = (PlayerController p) =>
+        {
+            if (_curState != PlayerState.Idle) return;
+            StartCoroutine(DoJump());
+        };
+
         Reset();
     }
 
@@ -40,30 +57,14 @@ public class PlayerController : MonoBehaviour
     {
         StopAllCoroutines();
 
-        _isAxeCooldown = false;
-        _isThrowCooldown = false;
+        _playerModel.IsAxeCooldown = false;
+        _playerModel.IsThrowCooldown = false;
         _curState = PlayerState.Idle;
     }
 
     private void PressKey(KeyType keyType)
     {
-        switch (keyType)
-        {
-            case KeyType.Axe:
-                if (_curState != PlayerState.Idle || _isAxeCooldown) break;
-                StartCoroutine(DoAxing());
-                StartCoroutine(SetAxeCooldown());
-                break;
-            case KeyType.Throw:
-                if (_curState != PlayerState.Idle || _isThrowCooldown) break;
-                StartCoroutine(DoThrowing());
-                StartCoroutine(SetThrowCooldown());
-                break;
-            case KeyType.Jump:
-                if (_curState != PlayerState.Idle) break;
-                StartCoroutine(DoJump());
-                break;
-        }
+        _playerModel.SkillDict[keyType](this);
     }
 
     private IEnumerator DoAxing()
@@ -76,9 +77,9 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator SetAxeCooldown()
     {
-        _isAxeCooldown = true;
+        _playerModel.IsAxeCooldown = true;
         yield return new WaitForSeconds(_playerModel.AxeCooldown);
-        _isAxeCooldown = false;
+        _playerModel.IsAxeCooldown = false;
     }
 
     private IEnumerator DoThrowing()
@@ -93,9 +94,9 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator SetThrowCooldown()
     {
-        _isThrowCooldown = true;
+        _playerModel.IsThrowCooldown = true;
         yield return new WaitForSeconds(_playerModel.ThrowCooldown);
-        _isThrowCooldown = false;
+        _playerModel.IsThrowCooldown = false;
     }
 
     private IEnumerator DoJump()
@@ -107,6 +108,13 @@ public class PlayerController : MonoBehaviour
         _curState = PlayerState.Act;
         yield return new WaitForSeconds(_playerModel.JumpTime);
         _curState = PlayerState.Idle;
+    }
+
+    private IEnumerator SetJumpCooldown()
+    {
+        _playerModel.IsJumpCooldown = true;
+        yield return new WaitForSeconds(_playerModel.JumpCooldown);
+        _playerModel.IsJumpCooldown = false;
     }
 
     public void GetStunned(float duration)
