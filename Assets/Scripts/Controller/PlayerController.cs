@@ -83,9 +83,10 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator DoAxing()
     {
+        yield return new WaitForSeconds(_playerModel.Modified().AxeMotionTime / 2);
         _treeController.GetDamage(_playerModel.Modified().AxeDamage, Id);
         _curState = PlayerState.Act;
-        yield return new WaitForSeconds(_playerModel.Modified().AxeMotionTime);
+        yield return new WaitForSeconds(_playerModel.Modified().AxeMotionTime / 2);
         _curState = PlayerState.Idle;
         GetComponent<SpriteAnimator>().Play(0);
     }
@@ -102,8 +103,12 @@ public class PlayerController : MonoBehaviour
         _curState = PlayerState.Act;
 
         yield return new WaitForSeconds(_playerModel.Modified().ThrowMotionTime / 2);
-        var go = Instantiate(_stoneObject, transform.position, Quaternion.identity);
-        go.GetComponent<ProjectileController>().Init(_isHeadingRight, _playerModel.Modified().ThrowStunDuration, Id);
+
+        if (_curState != PlayerState.Stun)
+        {
+            var go = Instantiate(_stoneObject, transform.position, Quaternion.identity);
+            go.GetComponent<ProjectileController>().Init(_isHeadingRight, _playerModel.Modified().ThrowStunDuration, Id);
+        }
 
         yield return new WaitForSeconds(_playerModel.Modified().ThrowMotionTime / 2);
         _curState = PlayerState.Idle;
