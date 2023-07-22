@@ -74,14 +74,16 @@ public class SoundManager : SingletonBehavior<SoundManager>
     #region Link Sounds with Enums
     public enum Sounds
     {
-        KnifeDash,
-        PaperTear,
-        PaperCut,
-        ButtonPress,
-        MeteorCrash,
-        KeyWrong,
-        KeyCorrect,
-        SpeedUp
+        KnowHowShow,
+        KnowHowSelect,
+        Swing,
+        Smash,
+        ThrowStone,
+        HitStone,
+        Jump,
+        AccidentShow,
+        RoundOver,
+        GameOver
     }
 
     private class SoundSettings
@@ -109,15 +111,17 @@ public class SoundManager : SingletonBehavior<SoundManager>
     private SoundSettings GetSoundSettings(Sounds soundEnum) =>
         soundEnum switch
         {
-            Sounds.PaperCut => new SoundSettings("종이찢기2"),
-            Sounds.PaperTear => new SoundSettings("종이찢기1"),
-            Sounds.KnifeDash => new SoundSettings("검베기1", 0.5f),
-            Sounds.ButtonPress => new SoundSettings("버튼(15)"),
-            Sounds.MeteorCrash => new SoundSettings("운석충돌", 0.3f),
-            Sounds.KeyWrong => new SoundSettings("버튼(32)"),
-            Sounds.KeyCorrect => new SoundSettings("종이찢기2", 0.5f),
-            Sounds.SpeedUp => new SoundSettings("버튼(28)", 0.5f),
-            _ => new SoundSettings("검베기(기모으기)"),
+            Sounds.KnowHowShow => new SoundSettings("KnowHowShow"),
+            Sounds.KnowHowSelect => new SoundSettings("KnowHowShow"),
+            Sounds.Swing => new SoundSettings("KnowHowShow"),
+            Sounds.Smash => new SoundSettings("KnowHowShow"),
+            Sounds.ThrowStone => new SoundSettings("KnowHowShow"),
+            Sounds.HitStone => new SoundSettings("KnowHowShow"),
+            Sounds.Jump => new SoundSettings("KnowHowShow"),
+            Sounds.AccidentShow => new SoundSettings("KnowHowShow"),
+            Sounds.RoundOver => new SoundSettings("KnowHowShow"),
+            Sounds.GameOver => new SoundSettings("KnowHowShow"),
+            _ => throw new ArgumentOutOfRangeException()
         };
     #endregion
 }
