@@ -1,0 +1,5 @@
+{
+  "treeHealthByStage": [300, 500, 800, 1000, 1200],
+  "maxStageIndex": 5,
+  "upgradeSelectTime": 20
+}

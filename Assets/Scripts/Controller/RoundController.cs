@@ -27,9 +27,9 @@ public class RoundController : MonoBehaviour
     {
         var roundIdx = _roundModel.StageIndex;
 
-        var treeModel = new TreeModel(_roundModel.TreeHealthByStage[roundIdx]);
+        _treeModel = new TreeModel(_roundModel.TreeHealthByStage[roundIdx]);
         _treeModel.OnTreeDestroyed += OnStageOver;
-        _treeController.Init(treeModel);
+        _treeController.Init(_treeModel);
 
         _playerController1.Reset();
         _playerController2.Reset();
