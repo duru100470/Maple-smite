@@ -24,11 +24,11 @@ public class RoundModel
         set
         {
             _stageIndex = value;
-            OnStageChanged?.Invoke(_stageIndex);
+            OnStageChanged?.Invoke(_stageIndex, WinnerList[value - 2]);
         }
     }
 
-    public event Action<int> OnStageChanged;
+    public event Action<int, int> OnStageChanged;
 }
 
 public enum Accident

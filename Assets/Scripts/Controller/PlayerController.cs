@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -11,6 +12,9 @@ public class PlayerController : MonoBehaviour
     private bool _isAxeCooldown = false;
     private bool _isThrowCooldown = false;
     private PlayerState _curState;
+    [SerializeField]
+    private int _id;
+    public int Id => _id;
 
     private PlayerModel _playerModel;
     [Header("Dependencies")]
@@ -23,13 +27,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject _stoneObject;
 
-
-
     public void Init(PlayerModel playerModel)
     {
         _playerModel = playerModel;
         _curState = PlayerState.Idle;
         _keyInputSender.OnKeyPressed += PressKey;
+
+        Reset();
+    }
+
+    public void Reset()
+    {
+        StopAllCoroutines();
+
+        _isAxeCooldown = false;
+        _isThrowCooldown = false;
+        _curState = PlayerState.Idle;
     }
 
     private void PressKey(KeyType keyType)
@@ -55,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator DoAxing()
     {
-        _treeController.GetDamage(_playerModel.AxeDamage);
+        _treeController.GetDamage(_playerModel.AxeDamage, Id);
         _curState = PlayerState.Act;
         yield return new WaitForSeconds(_playerModel.AxeMotionTime);
         _curState = PlayerState.Idle;
@@ -71,7 +84,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator DoThrowing()
     {
         var go = Instantiate(_stoneObject, transform.position, Quaternion.identity);
-        go.GetComponent<ProjectileController>().Init(_isHeadingRight, _playerModel.ThrowStunDuration, gameObject);
+        go.GetComponent<ProjectileController>().Init(_isHeadingRight, _playerModel.ThrowStunDuration, Id);
 
         _curState = PlayerState.Act;
         yield return new WaitForSeconds(_playerModel.ThrowMotionTime);

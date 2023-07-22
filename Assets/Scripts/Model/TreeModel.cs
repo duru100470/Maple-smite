@@ -6,6 +6,7 @@ using UnityEngine;
 public class TreeModel
 {
     private int _health;
+    public int LastAttackerId { get; set; } = 0;
 
     public int Health
     {
@@ -16,7 +17,7 @@ public class TreeModel
             _health = Math.Max(value, 0);
 
             if (_health <= 0)
-                OnTreeDestroyed?.Invoke();
+                OnTreeDestroyed?.Invoke(LastAttackerId);
         }
     }
 
@@ -26,5 +27,5 @@ public class TreeModel
     }
 
     public event Action<int, int> OnHpChanged;
-    public event Action OnTreeDestroyed;
+    public event Action<int> OnTreeDestroyed;
 }
