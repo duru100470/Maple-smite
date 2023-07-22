@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MassiveAxing : IKnowHow
+public class MassiveAxing : IKnowHowBuff
 {
     public PlayerModel ApplyEffect(PlayerModel playerModel)
     {

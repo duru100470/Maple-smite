@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MassiveThrowing : IKnowHow
+public class MassiveThrowing : IKnowHowBuff
 {
     public PlayerModel ApplyEffect(PlayerModel playerModel)
     {

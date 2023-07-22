@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RockThrowing : IKnowHow
+public class RockThrowing : IKnowHowBuff
 {
     public PlayerModel ApplyEffect(PlayerModel playerModel)
     {

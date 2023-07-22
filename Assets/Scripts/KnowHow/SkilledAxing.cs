@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkilledAxing : IKnowHow
+public class SkilledAxing : IKnowHowBuff
 {
     public PlayerModel ApplyEffect(PlayerModel playerModel)
     {

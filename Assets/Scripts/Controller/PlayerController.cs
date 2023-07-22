@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     public void Init(PlayerModel playerModel)
     {
         _playerModel = playerModel;
+        _playerModel.Id = Id;
         _curState = PlayerState.Idle;
         _keyInputSender.OnKeyPressed += PressKey;
 

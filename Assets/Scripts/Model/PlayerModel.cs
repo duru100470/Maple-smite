@@ -14,6 +14,7 @@ public class PlayerModel
     public float JumpTime { get; set; }
     public float JumpCooldown { get; set; }
     public float JumpHeight { get; set; }
+    public int Id { get; set; }
 
     private bool _isAxeCooldown = false;
     private bool _isThrowCooldown = false;
@@ -54,14 +55,14 @@ public class PlayerModel
     private Dictionary<KeyType, Action<PlayerController>> _skillDict = new();
     public Dictionary<KeyType, Action<PlayerController>> SkillDict => _skillDict;
 
-    private List<IKnowHow> _knowHowList = new();
-    public List<IKnowHow> KnowHowList => _knowHowList;
+    public List<IKnowHow> KnowHowEffectList => KnowHowManager.Inst.GetKnowHowEffectList(Id);
+    public List<IKnowHow> KnowHowList => KnowHowManager.Inst.GetKnowHowList(Id);
 
     public PlayerModel Modified()
     {
         var model = this;
 
-        foreach (var knowhow in _knowHowList)
+        foreach (var knowhow in KnowHowEffectList)
         {
             model = knowhow.ApplyEffect(model);
         }
