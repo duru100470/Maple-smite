@@ -23,7 +23,7 @@ public class ChoiceAndFocus : IKnowHowBuff
     }
 
     public KnowHowType GetKnowHowType()
-        => KnowHowType.EPIC_F;
+        => KnowHowType.EPIC_E;
 
     public string GetName()
     {

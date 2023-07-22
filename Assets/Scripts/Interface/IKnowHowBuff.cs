@@ -12,9 +12,9 @@ public enum KnowHowType
     EPIC_C,
     EPIC_D,
     EPIC_E,
-    EPIC_F,
     LEGENDARY_A,
     LEGENDARY_B,
     LEGENDARY_C,
-    LEGENDARY_D
+    LEGENDARY_D,
+    LEGENDARY_E
 }

@@ -23,7 +23,7 @@ public class PunchingBag : IKnowHowBuff
     }
 
     public KnowHowType GetKnowHowType()
-        => KnowHowType.EPIC_E;
+        => KnowHowType.LEGENDARY_E;
 
     public string GetName()
     {
