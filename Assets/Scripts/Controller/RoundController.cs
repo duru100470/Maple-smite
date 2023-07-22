@@ -15,11 +15,15 @@ public class RoundController : MonoBehaviour
     [SerializeField]
     private PlayerController _playerController2;
 
+    private float _accidentPercent;
+    private bool _isAccidentHappen;
+
     public void Init(RoundModel roundModel, TreeModel treeModel)
     {
         _roundModel = roundModel;
         _treeModel = treeModel;
         _treeModel.OnTreeDestroyed += OnStageOver;
+        _treeModel.OnHpChanged += CheckAccidentShouldHappen;
 
         StartNewRound();
     }
@@ -29,9 +33,22 @@ public class RoundController : MonoBehaviour
     {
         var roundIdx = _roundModel.StageIndex;
 
-        _treeModel.Reset(_roundModel.TreeHealthByStage[roundIdx]);
+        _treeModel.Reset(_roundModel.TreeHealthByStage[roundIdx - 1]);
+        _treeController.Reset(_roundModel.TreeDamageByStage[roundIdx - 1]);
         _playerController1.Reset();
         _playerController2.Reset();
+
+        _accidentPercent = UnityEngine.Random.Range(0.3f, 0.7f);
+        _isAccidentHappen = false;
+    }
+
+    private void CheckAccidentShouldHappen(int _, int health)
+    {
+        if (((float)(_treeModel.Health) / (float)(_treeModel.MaxHealth)) < _accidentPercent && !_isAccidentHappen)
+        {
+            AccidentManager.Inst.OccurAccident();
+            _isAccidentHappen = true;
+        }
     }
 
     private void OnStageOver(int attackerId)

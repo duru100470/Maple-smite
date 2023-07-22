@@ -8,17 +8,24 @@ public class TreeModel
 {
     private int _health;
     public int LastAttackerId { get; set; } = 0;
+    public int MaxHealth { get; set; }
+    public bool IsAttackable { get; set; } = true;
 
     public int Health
     {
         get => _health;
         set
         {
+            if (!IsAttackable) return;
+
             OnHpChanged?.Invoke(_health, value);
             _health = Math.Max(value, 0);
 
             if (_health <= 0)
+            {
                 OnTreeDestroyed?.Invoke(LastAttackerId);
+                IsAttackable = false;
+            }
         }
     }
 
@@ -27,6 +34,7 @@ public class TreeModel
     public void Reset(int health)
     {
         _health = health;
+        MaxHealth = health;
     }
 
     public event Action<int, int> OnHpChanged;

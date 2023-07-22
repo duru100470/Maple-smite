@@ -14,6 +14,8 @@ public class RoundModel
     public List<int> WinnerList { get; set; } = new();
     // 라운드 별 나무 체력
     public List<int> TreeHealthByStage { get; set; } = new();
+    // 라운드 별 나무 피다는 퍼센트
+    public List<float> TreeDamageByStage { get; set; } = new();
     // 라운드 별 변수 목록
     public List<Accident[]> AccidentListByStage { get; set; } = new();
     // 최대 몇 스테이지인지
