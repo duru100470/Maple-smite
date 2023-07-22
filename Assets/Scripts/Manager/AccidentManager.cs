@@ -20,19 +20,19 @@ public class AccidentManager : SingletonBehavior<AccidentManager>
         {
             case Accident.Thunder:
                 StartCoroutine(Thunder());
-                _accidentView.PrintMessage("Thunder is coming!");
+                StartCoroutine(_accidentView.RaiseThunderAccident());
                 break;
             case Accident.Sunlight:
                 StartCoroutine(Sunlight(stageIndex));
-                _accidentView.PrintMessage("Sunlight is coming!");
+                StartCoroutine(_accidentView.RaiseSunlightAccident());
                 break;
             case Accident.WoodCutter:
                 StartCoroutine(Woodcutter());
-                _accidentView.PrintMessage("Woodcutter is coming!");
+                StartCoroutine(_accidentView.RaiseWoodcutterAccident());
                 break;
             case Accident.Rain:
                 StartCoroutine(Rain());
-                _accidentView.PrintMessage("Rain is coming!");
+                StartCoroutine(_accidentView.RaiseRainAccident());
                 break;
         }
     }
@@ -73,8 +73,7 @@ public class AccidentManager : SingletonBehavior<AccidentManager>
 
     private IEnumerator Thunder()
     {
-        Debug.Log("It will thunder!");
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         _treeController.GetDamagePercentage(0.18f, 0);
     }
 }
