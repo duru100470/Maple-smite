@@ -28,6 +28,7 @@ public class RoundModel
         set
         {
             _stageIndex = value;
+            Debug.Log($"{_stageIndex - 1} Stage Over. Player {WinnerList[value - 2]} Won!");
             OnStageChanged?.Invoke(_stageIndex, WinnerList[value - 2]);
         }
     }

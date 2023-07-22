@@ -24,6 +24,7 @@ public class TreeModel
             if (_health <= 0)
             {
                 OnTreeDestroyed?.Invoke(LastAttackerId);
+                Debug.Log("Tree was destroyed!");
                 IsAttackable = false;
             }
         }

@@ -53,13 +53,7 @@ public class RoundController : MonoBehaviour
 
     private void OnStageOver(int attackerId)
     {
-        _roundModel.WinnerList.Add(attackerId switch
-        {
-            0 => 0,
-            1 => 2,
-            2 => 1,
-            _ => throw new Exception()
-        });
+        _roundModel.WinnerList.Add(attackerId);
         _roundModel.StageIndex++;
     }
 }
