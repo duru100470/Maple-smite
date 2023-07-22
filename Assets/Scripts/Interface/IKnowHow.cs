@@ -8,10 +8,21 @@ public interface IKnowHow
     KnowHowType GetKnowHowType();
     string GetName();
     string GetDescription();
-    void ApplyEffect(PlayerModel playerModel);
+    PlayerModel ApplyEffect(PlayerModel playerModel);
 }
 
 public enum KnowHowType
 {
-
+    EPIC_A,
+    EPIC_B,
+    EPIC_C,
+    EPIC_D,
+    EPIC_E,
+    EPIC_F,
+    LEGENDARY_A,
+    LEGENDARY_B,
+    LEGENDARY_C,
+    LEGENDARY_D,
+    LEGENDARY_E,
+    LEGENDARY_F
 }

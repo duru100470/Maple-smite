@@ -57,6 +57,15 @@ public class PlayerModel
     private List<IKnowHow> _knowHowList = new();
     public List<IKnowHow> KnowHowList => _knowHowList;
 
-    public void ApplyKnowHow()
-        => _knowHowList.ForEach(k => k.ApplyEffect(this));
+    public PlayerModel Modified()
+    {
+        var model = this;
+
+        foreach (var knowhow in _knowHowList)
+        {
+            model = knowhow.ApplyEffect(model);
+        }
+
+        return model;
+    }
 }

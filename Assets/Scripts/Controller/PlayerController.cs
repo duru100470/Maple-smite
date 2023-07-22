@@ -34,13 +34,13 @@ public class PlayerController : MonoBehaviour
 
         _playerModel.SkillDict[KeyType.Axe] = (PlayerController p) =>
         {
-            if (_curState != PlayerState.Idle || _playerModel.IsAxeCooldown) return;
+            if (_curState != PlayerState.Idle || _playerModel.Modified().IsAxeCooldown) return;
             StartCoroutine(DoAxing());
             StartCoroutine(SetAxeCooldown());
         };
         _playerModel.SkillDict[KeyType.Throw] = (PlayerController p) =>
         {
-            if (_curState != PlayerState.Idle || _playerModel.IsThrowCooldown) return;
+            if (_curState != PlayerState.Idle || _playerModel.Modified().IsThrowCooldown) return;
             StartCoroutine(DoThrowing());
             StartCoroutine(SetThrowCooldown());
         };
@@ -64,38 +64,38 @@ public class PlayerController : MonoBehaviour
 
     private void PressKey(KeyType keyType)
     {
-        _playerModel.SkillDict[keyType](this);
+        _playerModel.Modified().SkillDict[keyType](this);
     }
 
     private IEnumerator DoAxing()
     {
-        _treeController.GetDamage(_playerModel.AxeDamage, Id);
+        _treeController.GetDamage(_playerModel.Modified().AxeDamage, Id);
         _curState = PlayerState.Act;
-        yield return new WaitForSeconds(_playerModel.AxeMotionTime);
+        yield return new WaitForSeconds(_playerModel.Modified().AxeMotionTime);
         _curState = PlayerState.Idle;
     }
 
     private IEnumerator SetAxeCooldown()
     {
         _playerModel.IsAxeCooldown = true;
-        yield return new WaitForSeconds(_playerModel.AxeCooldown);
+        yield return new WaitForSeconds(_playerModel.Modified().AxeCooldown);
         _playerModel.IsAxeCooldown = false;
     }
 
     private IEnumerator DoThrowing()
     {
         var go = Instantiate(_stoneObject, transform.position, Quaternion.identity);
-        go.GetComponent<ProjectileController>().Init(_isHeadingRight, _playerModel.ThrowStunDuration, Id);
+        go.GetComponent<ProjectileController>().Init(_isHeadingRight, _playerModel.Modified().ThrowStunDuration, Id);
 
         _curState = PlayerState.Act;
-        yield return new WaitForSeconds(_playerModel.ThrowMotionTime);
+        yield return new WaitForSeconds(_playerModel.Modified().ThrowMotionTime);
         _curState = PlayerState.Idle;
     }
 
     private IEnumerator SetThrowCooldown()
     {
         _playerModel.IsThrowCooldown = true;
-        yield return new WaitForSeconds(_playerModel.ThrowCooldown);
+        yield return new WaitForSeconds(_playerModel.Modified().ThrowCooldown);
         _playerModel.IsThrowCooldown = false;
     }
 
@@ -106,14 +106,14 @@ public class PlayerController : MonoBehaviour
         seq.Append(transform.DOLocalMoveY(transform.position.y, _playerModel.JumpTime / 2).SetEase(Ease.InQuad));
 
         _curState = PlayerState.Act;
-        yield return new WaitForSeconds(_playerModel.JumpTime);
+        yield return new WaitForSeconds(_playerModel.Modified().JumpTime);
         _curState = PlayerState.Idle;
     }
 
     private IEnumerator SetJumpCooldown()
     {
         _playerModel.IsJumpCooldown = true;
-        yield return new WaitForSeconds(_playerModel.JumpCooldown);
+        yield return new WaitForSeconds(_playerModel.Modified().JumpCooldown);
         _playerModel.IsJumpCooldown = false;
     }
 
