@@ -31,7 +31,7 @@ public class RoundModel
             OnStageChanged?.Invoke(_stageIndex, WinnerList[value - 2]);
         }
     }
-
+    // (몇 라운드인지, 1P/2P 중 누가 이겼는지)
     public event Action<int, int> OnStageChanged;
 }
 
