@@ -29,7 +29,7 @@ public class RoundController : MonoBehaviour
     }
 
     // TODO: RoundView에서 증강 선택이 완료되거나, 시간이 만료되면 StartNewRound 호출
-    private void StartNewRound()
+    public void StartNewRound()
     {
         var roundIdx = _roundModel.StageIndex;
 
