@@ -1,0 +1,6 @@
+{
+  "treeHealthByStage": [300, 500, 800, 1000, 1200],
+  "accidentListByStage": [[0], [0, 1]],
+  "maxStageIndex": 5,
+  "upgradeSelectTime": 20
+}

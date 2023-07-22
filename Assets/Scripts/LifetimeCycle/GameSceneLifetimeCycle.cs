@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class GameSceneLifetimeCycle : LifetimeCycle
 {
@@ -25,11 +26,10 @@ public class GameSceneLifetimeCycle : LifetimeCycle
 
     public override void Initialize()
     {
-        // FIXME: Hardcoded
         // Initialize models
-        var playerModel1 = new PlayerModel();
-        var playerModel2 = new PlayerModel();
-        var roundModel = new RoundModel();
+        var playerModel1 = GetModelFromJson<PlayerModel>("Text/player1");
+        var playerModel2 = GetModelFromJson<PlayerModel>("Text/player2");
+        var roundModel = GetModelFromJson<RoundModel>("Text/round");
 
         // Initialize controllers
         _keyInputSender1.Init();
@@ -40,6 +40,12 @@ public class GameSceneLifetimeCycle : LifetimeCycle
         _skillView2.Init(playerModel2);
 
         _roundController.Init(roundModel);
+    }
+
+    private T GetModelFromJson<T>(string path)
+    {
+        var text = Resources.Load<TextAsset>(path).text;
+        return JsonConvert.DeserializeObject<T>(text);
     }
 
     public void Dispose()
