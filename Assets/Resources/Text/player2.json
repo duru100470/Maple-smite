@@ -1,11 +1,11 @@
 {
-  "axeDamage": 10,
+  "axeDamage": 300,
   "axeCooldown": 3,
   "axeMotionTime": 0.5,
   "ThrowStunDuration": 1,
-  "ThrowCooldown": 1,
-  "ThrowMotionTime": 1,
+  "ThrowCooldown": 3,
+  "ThrowMotionTime": 0.5,
   "JumpTime": 1,
-  "JumpCooldown": 1,
+  "JumpCooldown": 2,
   "JumpHeight": 1
 }

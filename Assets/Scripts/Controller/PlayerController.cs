@@ -84,7 +84,13 @@ public class PlayerController : MonoBehaviour
     private IEnumerator DoAxing()
     {
         yield return new WaitForSeconds(_playerModel.Modified().AxeMotionTime / 2);
-        _treeController.GetDamage(_playerModel.Modified().AxeDamage, Id);
+
+        if (_curState != PlayerState.Stun)
+        {
+            _treeController.GetDamage(_playerModel.Modified().AxeDamage, Id);
+            _playerModel.AxeDamage = (int)(_playerModel.AxeDamage * 1.2f);
+        }
+
         _curState = PlayerState.Act;
         yield return new WaitForSeconds(_playerModel.Modified().AxeMotionTime / 2);
         _curState = PlayerState.Idle;
