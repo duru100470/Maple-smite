@@ -6,7 +6,7 @@ public class AxingExpert : IKnowHowDebuff
 {
     public PlayerModel ApplyEffect(PlayerModel playerModel)
     {
-        playerModel.AxeCooldown *= 1.1f;
+        var newPlayerModel = playerModel.AxeCooldown *= 1.1f;
         return playerModel;
     }
 

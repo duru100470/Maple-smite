@@ -8,7 +8,7 @@ public class PunchingBag : IKnowHowBuff
     {
         playerModel.SkillDict[KeyType.Jump] = (p) =>
         {
-            if (p.CurState == PlayerState.Act || p.PlayerModel.Modified().IsJumpCooldown)
+            if (p.CurState == PlayerState.Act || p._isJumpCooldown)
                 return;
 
             p.DoCleans();

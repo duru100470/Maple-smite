@@ -8,7 +8,7 @@ public class ChoiceAndFocus : IKnowHowBuff
     {
         playerModel.SkillDict[KeyType.Throw] = (p) =>
         {
-            if (p.CurState != PlayerState.Idle || p.PlayerModel.Modified().IsThrowCooldown)
+            if (p.CurState != PlayerState.Idle || p._isThrowCooldown)
                 return;
 
             p.StartCoroutine(p.DoAttackTree());

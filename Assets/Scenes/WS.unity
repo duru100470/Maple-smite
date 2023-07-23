@@ -950,6 +950,17 @@ MonoBehaviour:
   - {fileID: 1558137459}
   - {fileID: 1450508598}
   _knowHowTypes: 
+  _cardImages:
+  - {fileID: 424886477, guid: 2ce56f98b4f11194da7e8823bb0121ab, type: 3}
+  - {fileID: 1129026079, guid: 2ce56f98b4f11194da7e8823bb0121ab, type: 3}
+  - {fileID: 1126483897, guid: 2ce56f98b4f11194da7e8823bb0121ab, type: 3}
+  - {fileID: -2046738971, guid: 2ce56f98b4f11194da7e8823bb0121ab, type: 3}
+  - {fileID: 896305460, guid: 2ce56f98b4f11194da7e8823bb0121ab, type: 3}
+  - {fileID: 1484654772, guid: 2ce56f98b4f11194da7e8823bb0121ab, type: 3}
+  - {fileID: 1436073858, guid: 2ce56f98b4f11194da7e8823bb0121ab, type: 3}
+  - {fileID: -248734735, guid: 2ce56f98b4f11194da7e8823bb0121ab, type: 3}
+  - {fileID: -414085726, guid: 2ce56f98b4f11194da7e8823bb0121ab, type: 3}
+  - {fileID: -59883162, guid: 2ce56f98b4f11194da7e8823bb0121ab, type: 3}
   SelectActivated: 0
 --- !u!1 &2016931365
 GameObject:
@@ -1113,6 +1124,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 423998452712401035, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 423998452712401035, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 423998452712401035, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 511374427102385206, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 511374427102385206, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 511374427102385206, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1309281769386283430, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
       propertyPath: _rain
       value: 
@@ -1265,10 +1300,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3374092397299045145, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3374092397299045145, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3374092397299045145, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3632709587297425789, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
       propertyPath: _selectCardView
       value: 
       objectReference: {fileID: 1932921755}
+    - target: {fileID: 3632709587297425789, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
+      propertyPath: _startRoundView
+      value: 
+      objectReference: {fileID: 1533957543}
     - target: {fileID: 3755888917022235145, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
       propertyPath: m_Color.a
       value: 0
@@ -1308,6 +1359,18 @@ PrefabInstance:
     - target: {fileID: 6607518453221178611, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7068377799679687795, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7068377799679687795, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7068377799679687795, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8625664542084204935, guid: a2e65851b45aa4147809c6bbc1c3f5ba, type: 3}
       propertyPath: _roundController

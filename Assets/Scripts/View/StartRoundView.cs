@@ -64,6 +64,8 @@ public class StartRoundView : MonoBehaviour
 
     private IEnumerator StartCountCoroutine()
     {
+        Time.timeScale = 1;
+        yield return new WaitForSeconds(2f);
         _countUI[0].color = Color.white;
 
         for (int i = 1; i < 3; i++)

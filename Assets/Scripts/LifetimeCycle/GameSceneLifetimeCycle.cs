@@ -38,6 +38,8 @@ public class GameSceneLifetimeCycle : LifetimeCycle
         var roundModel = GetModelFromJson<RoundModel>("Text/round");
         var treeModel = new TreeModel();
 
+        KnowHowManager.Inst.AddKnowHowToPlayer1(KnowHowType.EPIC_A);
+
         // Initialize controllers
         _keyInputSender1.Init();
         _keyInputSender2.Init();

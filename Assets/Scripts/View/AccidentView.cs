@@ -63,7 +63,7 @@ public class AccidentView : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
 
-        _lightRay.DOColor(new Color(1f, 1f, 1f, 0f), 1f);
+        _rain.DOColor(new Color(1f, 1f, 1f, 0f), 1f);
         _darkSky.DOColor(new Color(1f, 1f, 1f, 0f), 1f);
     }
 

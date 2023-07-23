@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private int _id;
     public bool CanAttack { get; set; } = false;
+    public bool _isAxeCooldown = false;
+    public bool _isThrowCooldown = false;
+    public bool _isJumpCooldown = false;
 
     public int Id => _id;
     public PlayerState CurState => _curState;
@@ -45,22 +48,23 @@ public class PlayerController : MonoBehaviour
 
         _playerModel.SkillDict[KeyType.Axe] = (PlayerController p) =>
         {
-            if (_curState != PlayerState.Idle || _playerModel.Modified().IsAxeCooldown) return;
-            GetComponent<SpriteAnimator>().Play(1, _playerModel.Modified().AxeMotionTime);
+            if (_curState != PlayerState.Idle || _isAxeCooldown) return;
+            GetComponent<SpriteAnimator>().Play(1, _playerModel.AxeMotionTime);
+            Debug.Log(_playerModel.AxeCooldown);
             StartCoroutine(DoAxing());
             StartCoroutine(SetAxeCooldown());
         };
         _playerModel.SkillDict[KeyType.Throw] = (PlayerController p) =>
         {
-            if (_curState != PlayerState.Idle || _playerModel.Modified().IsThrowCooldown) return;
-            GetComponent<SpriteAnimator>().Play(2, _playerModel.Modified().ThrowMotionTime);
+            if (_curState != PlayerState.Idle || _isThrowCooldown) return;
+            GetComponent<SpriteAnimator>().Play(2, _playerModel.ThrowMotionTime);
             StartCoroutine(DoThrowing());
             StartCoroutine(SetThrowCooldown());
         };
         _playerModel.SkillDict[KeyType.Jump] = (PlayerController p) =>
         {
-            if (_curState != PlayerState.Idle || _playerModel.Modified().IsJumpCooldown) return;
-            GetComponent<SpriteAnimator>().Play(3, _playerModel.Modified().JumpTime);
+            if (_curState != PlayerState.Idle || _isJumpCooldown) return;
+            GetComponent<SpriteAnimator>().Play(3, _playerModel.JumpTime);
             StartCoroutine(DoJump());
             StartCoroutine(SetJumpCooldown());
         };
@@ -73,37 +77,42 @@ public class PlayerController : MonoBehaviour
         StopAllCoroutines();
 
         GetComponent<SpriteAnimator>().Play(0);
+        _playerModel.Modified();
         _playerModel.IsAxeCooldown = false;
         _playerModel.IsThrowCooldown = false;
+        _isAxeCooldown = false;
+        _isThrowCooldown = false;
         _curState = PlayerState.Idle;
     }
 
     private void PressKey(KeyType keyType)
     {
         if (!CanAttack) return;
-        _playerModel.Modified().SkillDict[keyType](this);
+        _playerModel.SkillDict[keyType](this);
     }
 
     private IEnumerator DoAxing()
     {
-        yield return new WaitForSeconds(_playerModel.Modified().AxeMotionTime / 2);
+        yield return new WaitForSeconds(_playerModel.AxeMotionTime / 2);
 
         if (_curState != PlayerState.Stun)
         {
-            _treeController.GetDamage(_playerModel.Modified().AxeDamage, Id);
+            _treeController.GetDamage(_playerModel.AxeDamage, Id);
             _playerModel.AxeDamage = (int)(_playerModel.AxeDamage * 1.2f);
         }
 
         _curState = PlayerState.Act;
-        yield return new WaitForSeconds(_playerModel.Modified().AxeMotionTime / 2);
+        yield return new WaitForSeconds(_playerModel.AxeMotionTime / 2);
         _curState = PlayerState.Idle;
         GetComponent<SpriteAnimator>().Play(0);
     }
 
     private IEnumerator SetAxeCooldown()
     {
+        _isAxeCooldown = true;
         _playerModel.IsAxeCooldown = true;
-        yield return new WaitForSeconds(_playerModel.Modified().AxeCooldown);
+        yield return new WaitForSeconds(_playerModel.AxeCooldown);
+        _isAxeCooldown = false;
         _playerModel.IsAxeCooldown = false;
     }
 
@@ -111,23 +120,25 @@ public class PlayerController : MonoBehaviour
     {
         _curState = PlayerState.Act;
 
-        yield return new WaitForSeconds(_playerModel.Modified().ThrowMotionTime / 2);
+        yield return new WaitForSeconds(_playerModel.ThrowMotionTime / 2);
 
         if (_curState != PlayerState.Stun)
         {
             var go = Instantiate(_stoneObject, transform.position, Quaternion.identity);
-            go.GetComponent<ProjectileController>().Init(_isHeadingRight, _playerModel.Modified().ThrowStunDuration, Id);
+            go.GetComponent<ProjectileController>().Init(_isHeadingRight, _playerModel.ThrowStunDuration, Id);
         }
 
-        yield return new WaitForSeconds(_playerModel.Modified().ThrowMotionTime / 2);
+        yield return new WaitForSeconds(_playerModel.ThrowMotionTime / 2);
         _curState = PlayerState.Idle;
         GetComponent<SpriteAnimator>().Play(0);
     }
 
     public IEnumerator SetThrowCooldown()
     {
+        _isThrowCooldown = true;
         _playerModel.IsThrowCooldown = true;
-        yield return new WaitForSeconds(_playerModel.Modified().ThrowCooldown);
+        yield return new WaitForSeconds(_playerModel.ThrowCooldown);
+        _isThrowCooldown = true;
         _playerModel.IsThrowCooldown = false;
     }
 
@@ -138,15 +149,17 @@ public class PlayerController : MonoBehaviour
         seq.Append(transform.DOLocalMoveY(transform.position.y, _playerModel.JumpTime / 2).SetEase(Ease.InQuad));
 
         _curState = PlayerState.Act;
-        yield return new WaitForSeconds(_playerModel.Modified().JumpTime);
+        yield return new WaitForSeconds(_playerModel.JumpTime);
         _curState = PlayerState.Idle;
         GetComponent<SpriteAnimator>().Play(0);
     }
 
     public IEnumerator SetJumpCooldown()
     {
+        _isJumpCooldown = true;
         _playerModel.IsJumpCooldown = true;
-        yield return new WaitForSeconds(_playerModel.Modified().JumpCooldown);
+        yield return new WaitForSeconds(_playerModel.JumpCooldown);
+        _isJumpCooldown = true;
         _playerModel.IsJumpCooldown = false;
     }
 
@@ -165,10 +178,10 @@ public class PlayerController : MonoBehaviour
     public IEnumerator DoAttackTree()
     {
         _treeController.GetDamagePercentage(0.05f, Id);
-        GetComponent<SpriteAnimator>().Play(2, _playerModel.Modified().ThrowMotionTime);
+        GetComponent<SpriteAnimator>().Play(2, _playerModel.ThrowMotionTime);
 
         _curState = PlayerState.Act;
-        yield return new WaitForSeconds(_playerModel.Modified().ThrowMotionTime);
+        yield return new WaitForSeconds(_playerModel.ThrowMotionTime);
         _curState = PlayerState.Idle;
         GetComponent<SpriteAnimator>().Play(0);
     }

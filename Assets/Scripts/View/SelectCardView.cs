@@ -20,6 +20,8 @@ public class SelectCardView : MonoBehaviour
     private Image[] _cards;
     [SerializeField]
     private List<KnowHowType> _knowHowTypes;
+    [SerializeField]
+    private List<Sprite> _cardImages;
 
     private Sequence _cardSeq;
 
@@ -47,6 +49,11 @@ public class SelectCardView : MonoBehaviour
     public void CardSelectUITween(List<KnowHowType> knowHowTypes)
     {
         _knowHowTypes = knowHowTypes;
+
+        for (int i = 0; i < 4; i++)
+        {
+            _cards[i].sprite = _cardImages[(int)_knowHowTypes[i]];
+        }
 
         _cardSeq = DOTween.Sequence().Pause().SetUpdate(true)
         .Append(_back.DOFade(0.9f, 0.3f).SetEase(Ease.Linear))

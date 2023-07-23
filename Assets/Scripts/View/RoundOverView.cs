@@ -10,6 +10,8 @@ public class RoundOverView : MonoBehaviour
 
     [field: SerializeField]
     private SelectCardView _selectCardView;
+    [field: SerializeField]
+    private StartRoundView _startRoundView;
 
     [field: SerializeField]
     private Image[] _1PCounts;
@@ -62,7 +64,8 @@ public class RoundOverView : MonoBehaviour
             _2PCount++;
         }
 
-        PointUITween(stage, count, mask);
+        if (winner == 1 || winner == 2)
+            PointUITween(stage - 1, count, mask);
     }
 
     private void PointUITween(int stage, Image count, Image mask)
@@ -75,12 +78,20 @@ public class RoundOverView : MonoBehaviour
         .Join(mask.transform.DOPunchScale(_pointSeq_TO, _pointSeq_Duration, _pointSeq_Vibrato).SetEase(Ease.OutQuad))
         .OnComplete(() =>
         {
-            _selectCardView.gameObject.SetActive(true);
-            _selectCardView.CardSelectUITween(stage switch
+            Debug.Log(stage);
+            if (stage == 2 || stage == 4)
             {
-                // TODO: 2, 4 라운드시 에픽, 레전 노하우로 바꿔야함
-                _ => KnowHowManager.Inst.GetRandomEpicKnowHow()
-            });
+                _selectCardView.gameObject.SetActive(true);
+                _selectCardView.CardSelectUITween(stage switch
+                {
+                    2 => KnowHowManager.Inst.GetRandomEpicKnowHow(),
+                    4 => KnowHowManager.Inst.GetRandomEpicKnowHow()
+                });
+            }
+            else
+            {
+                _startRoundView.StartCountDown(stage);
+            }
         });
 
         _pointSeq.Restart();

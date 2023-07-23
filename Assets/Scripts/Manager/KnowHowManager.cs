@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class KnowHowManager : SingletonBehavior<KnowHowManager>
 {
-    private List<IKnowHowBuff> _knowHowBuffList1 = new();
-    private List<IKnowHowBuff> _knowHowBuffList2 = new();
-    private List<IKnowHowDebuff> _knowHowDebuffList1 = new();
-    private List<IKnowHowDebuff> _knowHowDebuffList2 = new();
+    private Dictionary<IKnowHowBuff, bool> _knowHowBuffList1 = new();
+    private Dictionary<IKnowHowBuff, bool> _knowHowBuffList2 = new();
+    private Dictionary<IKnowHowDebuff, bool> _knowHowDebuffList1 = new();
+    private Dictionary<IKnowHowDebuff, bool> _knowHowDebuffList2 = new();
 
-    public List<IKnowHowBuff> KnowHowBuffList1 => _knowHowBuffList1;
-    public List<IKnowHowBuff> KnowHowBuffList2 => _knowHowBuffList2;
-    public List<IKnowHowDebuff> KnowHowDebuffList1 => _knowHowDebuffList1;
-    public List<IKnowHowDebuff> KnowHowDebuffList2 => _knowHowDebuffList2;
+    public Dictionary<IKnowHowBuff, bool> KnowHowBuffList1 => _knowHowBuffList1;
+    public Dictionary<IKnowHowBuff, bool> KnowHowBuffList2 => _knowHowBuffList2;
+    public Dictionary<IKnowHowDebuff, bool> KnowHowDebuffList1 => _knowHowDebuffList1;
+    public Dictionary<IKnowHowDebuff, bool> KnowHowDebuffList2 => _knowHowDebuffList2;
 
     public List<IKnowHow> GetKnowHowEffectList(int id)
     {
@@ -31,8 +31,37 @@ public class KnowHowManager : SingletonBehavior<KnowHowManager>
         };
 
         var knowhows = new List<IKnowHow>();
-        knowhows.AddRange(buffs);
-        knowhows.AddRange(debuffs);
+        var buffer1 = new List<IKnowHowBuff>();
+
+        foreach (var k in buffs.Keys)
+        {
+            if (!buffs[k])
+            {
+                knowhows.Add(k);
+                buffer1.Add(k);
+            }
+        }
+
+        foreach (var k in buffer1)
+        {
+            buffs[k] = false;
+        }
+
+        var buffer2 = new List<IKnowHowDebuff>();
+
+        foreach (var k in debuffs.Keys)
+        {
+            if (!debuffs[k])
+            {
+                knowhows.Add(k);
+                buffer2.Add(k);
+            }
+        }
+
+        foreach (var k in buffer2)
+        {
+            debuffs[k] = false;
+        }
 
         return knowhows;
     }
@@ -54,8 +83,6 @@ public class KnowHowManager : SingletonBehavior<KnowHowManager>
         };
 
         var knowhows = new List<IKnowHow>();
-        knowhows.AddRange(buffs);
-        knowhows.AddRange(debuffs);
 
         return knowhows;
     }
@@ -105,7 +132,7 @@ public class KnowHowManager : SingletonBehavior<KnowHowManager>
                 KnowHowType.LEGENDARY_D => new RockThrowing(),
                 KnowHowType.LEGENDARY_E => new PunchingBag(),
                 _ => throw new KeyNotFoundException()
-            });
+            }, false);
         }
         catch { }
 
@@ -116,7 +143,7 @@ public class KnowHowManager : SingletonBehavior<KnowHowManager>
                 KnowHowType.LEGENDARY_A => new AxingExpert(),
                 KnowHowType.LEGENDARY_B => new ThrowingExpert(),
                 _ => throw new KeyNotFoundException()
-            });
+            }, false);
         }
         catch { }
     }
@@ -136,7 +163,7 @@ public class KnowHowManager : SingletonBehavior<KnowHowManager>
                 KnowHowType.LEGENDARY_D => new RockThrowing(),
                 KnowHowType.LEGENDARY_E => new PunchingBag(),
                 _ => throw new KeyNotFoundException()
-            });
+            }, false);
         }
         catch { }
 
@@ -147,7 +174,7 @@ public class KnowHowManager : SingletonBehavior<KnowHowManager>
                 KnowHowType.LEGENDARY_A => new AxingExpert(),
                 KnowHowType.LEGENDARY_B => new ThrowingExpert(),
                 _ => throw new KeyNotFoundException()
-            });
+            }, false);
         }
         catch { }
     }

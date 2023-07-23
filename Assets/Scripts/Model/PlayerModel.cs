@@ -25,7 +25,7 @@ public class PlayerModel
         get => _isAxeCooldown;
         set
         {
-            if (value) OnAxeSkillUse?.Invoke(AxeCooldown);
+            if (value) OnAxeSkillUse?.Invoke(this.AxeCooldown);
             _isAxeCooldown = value;
         }
     }
@@ -34,7 +34,7 @@ public class PlayerModel
         get => _isThrowCooldown;
         set
         {
-            if (value) OnThrowSkillUse?.Invoke(ThrowCooldown);
+            if (value) OnThrowSkillUse?.Invoke(this.ThrowCooldown);
             _isThrowCooldown = value;
         }
     }
@@ -43,7 +43,7 @@ public class PlayerModel
         get => _isJumpCooldown;
         set
         {
-            if (value) OnJumpSkillUse?.Invoke(JumpCooldown);
+            if (value) OnJumpSkillUse?.Invoke(this.JumpCooldown);
             _isJumpCooldown = value;
         }
     }
@@ -58,7 +58,7 @@ public class PlayerModel
     public List<IKnowHow> KnowHowEffectList => KnowHowManager.Inst.GetKnowHowEffectList(Id);
     public List<IKnowHow> KnowHowList => KnowHowManager.Inst.GetKnowHowList(Id);
 
-    public PlayerModel Modified()
+    public void Modified()
     {
         var model = this;
 
@@ -66,7 +66,5 @@ public class PlayerModel
         {
             model = knowhow.ApplyEffect(model);
         }
-
-        return model;
     }
 }
