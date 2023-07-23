@@ -45,9 +45,9 @@ public class UITweens : MonoBehaviour
         IsPlaying = true;
 
         start_Action = DOTween.Sequence().Pause().SetUpdate(true)
-        .Append(images[0].rectTransform.DOAnchorPosX(300, 1)).SetDelay(0.8f)
-        .Join(images[1].rectTransform.DOAnchorPosX(300, 1)).SetDelay(0.5f)
-        .Join(images[2].rectTransform.DOAnchorPosX(300, 1)).SetDelay(0.2f)
+        .Append(images[0].rectTransform.DOAnchorPosX(-630, 1)).SetDelay(0.8f)
+        .Join(images[1].rectTransform.DOAnchorPosX(-630, 1)).SetDelay(0.5f)
+        .Join(images[2].rectTransform.DOAnchorPosX(-630, 1)).SetDelay(0.2f)
         .OnComplete(() =>
         {
             IsPlaying = false;
@@ -64,9 +64,9 @@ public class UITweens : MonoBehaviour
         IsPlaying = true;
 
         end_Action = DOTween.Sequence().Pause().SetUpdate(true)
-        .Append(images[0].rectTransform.DOAnchorPosX(2450, 1)).SetDelay(0.8f)
-        .Join(images[1].rectTransform.DOAnchorPosX(2450, 1)).SetDelay(0.5f)
-        .Join(images[2].rectTransform.DOAnchorPosX(2450, 1)).SetDelay(0.2f)
+        .Append(images[0].rectTransform.DOAnchorPosX(1500, 1)).SetDelay(0.8f)
+        .Join(images[1].rectTransform.DOAnchorPosX(1500, 1)).SetDelay(0.5f)
+        .Join(images[2].rectTransform.DOAnchorPosX(1500, 1)).SetDelay(0.2f)
         .OnComplete(() =>
         {
              IsPlaying = false;

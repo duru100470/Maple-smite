@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
 
             yield return null;
         }
-        _transitionUI.SceneTransition();
+        TutorialPopUp();
     }
 
     public void LoadScene(string sceneName)
@@ -107,8 +107,8 @@ public class GameManager : MonoBehaviour
     {
         sequence = DOTween.Sequence().Pause().SetUpdate(true)
         .Append(_image.DOFade(1, 1))
-        .Join(_image.DOFade(1, 4))
-        .Join(_image.DOFade(0, 1))
+        .Append(_image.DOFade(1, 4))
+        .Append(_image.DOFade(0, 1))
         .OnComplete(() =>
         {
             _transitionUI.SceneTransition();
