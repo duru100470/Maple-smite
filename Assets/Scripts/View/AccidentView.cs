@@ -11,7 +11,9 @@ public class AccidentView : MonoBehaviour
     [SerializeField]
     private SpriteRenderer _darkSky;
     [SerializeField]
-    private SpriteRenderer _lightning;
+    private SpriteRenderer _lightning1;
+    [SerializeField]
+    private SpriteRenderer _lightning2;
     [SerializeField]
     private SpriteRenderer _lightRay;
     [SerializeField]
@@ -32,8 +34,12 @@ public class AccidentView : MonoBehaviour
         _darkSky.DOColor(Color.white, 1f);
 
         yield return new WaitForSeconds(3f);
-        _lightning.color = Color.white;
-        _lightning.DOColor(new Color(1f, 1f, 1f, 0f), 2f);
+        _lightning1.color = Color.white;
+        _lightning1.DOColor(new Color(1f, 1f, 1f, 0f), 2f);
+        yield return new WaitForSeconds(.5f);
+        _lightning2.color = Color.white;
+        _lightning2.DOColor(new Color(1f, 1f, 1f, 0f), 2f);
+        yield return new WaitForSeconds(1f);
         _darkSky.DOColor(new Color(1f, 1f, 1f, 0f), 4f);
 
         // TODO: Sound 추가
@@ -51,7 +57,7 @@ public class AccidentView : MonoBehaviour
 
     public IEnumerator RaiseRainAccident()
     {
-        PrintMessage("Sunlight is coming..");
+        PrintMessage("Rain is coming..");
         _darkSky.DOColor(Color.white, 1f);
         _rain.DOColor(Color.white, 1f);
 
