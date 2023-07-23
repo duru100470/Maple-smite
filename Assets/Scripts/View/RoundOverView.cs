@@ -85,12 +85,12 @@ public class RoundOverView : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         Debug.Log(stage);
-        if (stage == 1 || stage == 4)
+        if (stage == 2 || stage == 4)
         {
             _selectCardView.gameObject.SetActive(true);
             _selectCardView.CardSelectUITween(stage switch
             {
-                1 => KnowHowManager.Inst.GetRandomEpicKnowHow(),
+                2 => KnowHowManager.Inst.GetRandomEpicKnowHow(),
                 4 => KnowHowManager.Inst.GetRandomEpicKnowHow()
             });
         }
