@@ -56,7 +56,10 @@ public class StartRoundView : MonoBehaviour
     {
         // TODO: 2, 4라운드로 바꿔야함
         if (stage != 1)
-            ChangeRoundUITween(_roundUI[stage - 2], _roundUI[stage - 1]);
+        {
+            _roundUI[0].color = new Color(1f, 1f, 1f, 0f);
+            ChangeRoundUITween(_roundUI[stage - 1], _roundUI[stage]);
+        }
         else
             _roundUI[0].color = Color.white;
         StartCoroutine(StartCountCoroutine());

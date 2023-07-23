@@ -28,10 +28,29 @@ public class RoundModel
         set
         {
             _stageIndex = value;
+            CheckIsThereWinner();
             Debug.Log($"{_stageIndex - 1} Stage Over. Player {WinnerList[value - 2]} Won!");
             OnStageChanged?.Invoke(_stageIndex, WinnerList[value - 2]);
         }
     }
     // (몇 라운드인지, 1P/2P 중 누가 이겼는지)
     public event Action<int, int> OnStageChanged;
+    public event Action<int> OnGameOver;
+
+    private void CheckIsThereWinner()
+    {
+        var cnt1 = 0;
+        var cnt2 = 0;
+
+        for (int i = 0; i < WinnerList.Count; i++)
+        {
+            if (WinnerList[i] == 1) cnt1++;
+            if (WinnerList[i] == 2) cnt2++;
+        }
+
+        if (cnt1 >= 3)
+            OnGameOver?.Invoke(1);
+        if (cnt2 >= 3)
+            OnGameOver?.Invoke(2);
+    }
 }

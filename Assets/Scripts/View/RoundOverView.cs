@@ -46,8 +46,6 @@ public class RoundOverView : MonoBehaviour
 
     private void RoundOverUI(int stage, int winner)
     {
-        Time.timeScale = 0;
-
         Image count = null;
         Image mask = null;
 
@@ -66,6 +64,9 @@ public class RoundOverView : MonoBehaviour
 
         if (winner == 1 || winner == 2)
             PointUITween(stage - 1, count, mask);
+
+        if (_1PCount == 3 || _2PCount == 3) return;
+        StartCoroutine(GotoNextStage(stage - 1));
     }
 
     private void PointUITween(int stage, Image count, Image mask)
@@ -75,25 +76,27 @@ public class RoundOverView : MonoBehaviour
         .Append(mask.DOFade(1, 0))
         .Join(count.DOFade(0, 0))
         .Join(count.transform.DOScale(1, 0))
-        .Join(mask.transform.DOPunchScale(_pointSeq_TO, _pointSeq_Duration, _pointSeq_Vibrato).SetEase(Ease.OutQuad))
-        .OnComplete(() =>
-        {
-            Debug.Log(stage);
-            if (stage == 2 || stage == 4)
-            {
-                _selectCardView.gameObject.SetActive(true);
-                _selectCardView.CardSelectUITween(stage switch
-                {
-                    2 => KnowHowManager.Inst.GetRandomEpicKnowHow(),
-                    4 => KnowHowManager.Inst.GetRandomEpicKnowHow()
-                });
-            }
-            else
-            {
-                _startRoundView.StartCountDown(stage);
-            }
-        });
+        .Join(mask.transform.DOPunchScale(_pointSeq_TO, _pointSeq_Duration, _pointSeq_Vibrato).SetEase(Ease.OutQuad));
 
         _pointSeq.Restart();
+    }
+
+    private IEnumerator GotoNextStage(int stage)
+    {
+        yield return new WaitForSeconds(1f);
+        Debug.Log(stage);
+        if (stage == 1 || stage == 4)
+        {
+            _selectCardView.gameObject.SetActive(true);
+            _selectCardView.CardSelectUITween(stage switch
+            {
+                1 => KnowHowManager.Inst.GetRandomEpicKnowHow(),
+                4 => KnowHowManager.Inst.GetRandomEpicKnowHow()
+            });
+        }
+        else
+        {
+            _startRoundView.StartCountDown(stage);
+        }
     }
 }
