@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoldAxeSilverAxe : IKnowHow
+public class GoldAxeSilverAxe : IKnowHowBuff
 {
     public PlayerModel ApplyEffect(PlayerModel playerModel)
     {

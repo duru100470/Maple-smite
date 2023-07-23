@@ -62,10 +62,10 @@ public class RoundOverView : MonoBehaviour
             _2PCount++;
         }
 
-        PointUITween(count, mask);
+        PointUITween(stage, count, mask);
     }
 
-    private void PointUITween(Image count, Image mask)
+    private void PointUITween(int stage, Image count, Image mask)
     {
         _pointSeq = DOTween.Sequence().Pause().SetUpdate(true)
         .Append(count.transform.DOScale(0, 0.2f))
@@ -75,7 +75,11 @@ public class RoundOverView : MonoBehaviour
         .Join(mask.transform.DOPunchScale(_pointSeq_TO, _pointSeq_Duration, _pointSeq_Vibrato).SetEase(Ease.OutQuad))
         .OnComplete(() =>
         {
-            _selectCardView.CardSelectUITween();
+            _selectCardView.CardSelectUITween(stage switch
+            {
+                // For test
+                _ => KnowHowManager.Inst.GetRandomEpicKnowHow()
+            });
         });
 
         _pointSeq.Restart();

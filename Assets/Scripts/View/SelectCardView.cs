@@ -18,13 +18,15 @@ public class SelectCardView : MonoBehaviour
     private Image _back;
     [field: SerializeField]
     private Image[] _cards;
+    [SerializeField]
+    private List<KnowHowType> _knowHowTypes;
 
     private Sequence _cardSeq;
 
     public bool SelectActivated = false;
 
-    private bool _playerOneSelect = false;
-    private bool _playerTwoSelect = false;
+    private bool _playerOneSelect = true;
+    private bool _playerTwoSelect = true;
 
     private int _count = 0;
 
@@ -42,8 +44,10 @@ public class SelectCardView : MonoBehaviour
         if (_playerTwoSelect) CheckPlayerTwo();
     }
 
-    public void CardSelectUITween()
+    public void CardSelectUITween(List<KnowHowType> knowHowTypes)
     {
+        _knowHowTypes = knowHowTypes;
+
         _cardSeq = DOTween.Sequence().Pause().SetUpdate(true)
         .Append(_back.DOFade(0.9f, 0.3f).SetEase(Ease.Linear))
         .Append(_cards[0].rectTransform.DOAnchorPosY(0, 0.2f).SetEase(Ease.Linear))
@@ -62,6 +66,31 @@ public class SelectCardView : MonoBehaviour
         });
 
         _cardSeq.Restart();
+    }
+
+    private void CloseCard()
+    {
+        foreach (var card in _cards)
+        {
+            Sequence sequence = DOTween.Sequence().Pause().SetUpdate(true)
+            .Append(card.rectTransform.DOAnchorPosY(200, 0.2f).SetEase(Ease.Linear))
+            .Join(card.DOFade(0, 0.2f).SetEase(Ease.Linear));
+
+            sequence.Restart();
+        }
+    }
+
+    private IEnumerator CloseCardViewPanel()
+    {
+        Debug.Log("Closing Panel");
+        Time.timeScale = 1f;
+        yield return new WaitForSeconds(1f);
+        CloseCard();
+        yield return new WaitForSeconds(1f);
+        _back.DOFade(0f, 0.3f).SetEase(Ease.Linear);
+        yield return new WaitForSeconds(.3f);
+
+        _startRoundView.StartCountDown(_roundModel.StageIndex);
     }
 
     public void CardCloseUITween(Image card)
@@ -100,43 +129,49 @@ public class SelectCardView : MonoBehaviour
 
     private void CheckPlayerOne()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             _selectedCardNum01 = 0;
             SelectedCardTween(_cards[0]);
             _playerOneSelect = false;
+
+            KnowHowManager.Inst.AddKnowHowToPlayer1(_knowHowTypes[0]);
+
+            if (!_playerTwoSelect) StartCoroutine(CloseCardViewPanel());
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S))
         {
             _selectedCardNum01 = 1;
             SelectedCardTween(_cards[1]);
             _playerOneSelect = false;
-        }
 
-        if (!_playerOneSelect && !_playerTwoSelect)
-        {
-            _startRoundView.StartCountDown(_roundModel.StageIndex);
+            KnowHowManager.Inst.AddKnowHowToPlayer1(_knowHowTypes[1]);
+
+            if (!_playerTwoSelect) StartCoroutine(CloseCardViewPanel());
         }
     }
 
     private void CheckPlayerTwo()
     {
-        if (Input.GetKey(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             _selectedCardNum02 = 2;
             SelectedCardTween(_cards[2]);
             _playerTwoSelect = false;
+
+            KnowHowManager.Inst.AddKnowHowToPlayer1(_knowHowTypes[2]);
+
+            if (!_playerOneSelect) StartCoroutine(CloseCardViewPanel());
         }
-        if (Input.GetKey(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             _selectedCardNum02 = 3;
             SelectedCardTween(_cards[3]);
             _playerTwoSelect = false;
-        }
 
-        if (!_playerOneSelect && !_playerTwoSelect)
-        {
-            _startRoundView.StartCountDown(_roundModel.StageIndex);
+            KnowHowManager.Inst.AddKnowHowToPlayer1(_knowHowTypes[3]);
+
+            if (!_playerOneSelect) StartCoroutine(CloseCardViewPanel());
         }
     }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThrowingExpert : IKnowHow
+public class ThrowingExpert : IKnowHowDebuff
 {
     public PlayerModel ApplyEffect(PlayerModel playerModel)
     {
