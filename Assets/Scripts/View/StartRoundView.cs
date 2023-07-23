@@ -49,13 +49,15 @@ public class StartRoundView : MonoBehaviour
     {
         _roundModel = roundModel;
 
-        StartCountDown(1);
+        StartCountDown(0);
     }
 
     public void StartCountDown(int stage, int winner = 0)
     {
         // TODO: 2, 4라운드로 바꿔야함
-        if (stage != 1)
+        Debug.Log(stage);
+
+        if (stage != 0)
         {
             _roundUI[0].color = new Color(1f, 1f, 1f, 0f);
             ChangeRoundUITween(_roundUI[stage - 1], _roundUI[stage]);
