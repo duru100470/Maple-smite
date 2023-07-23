@@ -30,7 +30,6 @@ public class AccidentView : MonoBehaviour
 
     public IEnumerator RaiseThunderAccident()
     {
-        PrintMessage("Thunder is coming..");
         _darkSky.DOColor(Color.white, 1f);
 
         yield return new WaitForSeconds(3f);
@@ -47,7 +46,6 @@ public class AccidentView : MonoBehaviour
 
     public IEnumerator RaiseSunlightAccident()
     {
-        PrintMessage("Sunlight is coming..");
         _lightRay.DOColor(Color.white, 1f);
 
         yield return new WaitForSeconds(3f);
@@ -57,7 +55,6 @@ public class AccidentView : MonoBehaviour
 
     public IEnumerator RaiseRainAccident()
     {
-        PrintMessage("Rain is coming..");
         _darkSky.DOColor(Color.white, 1f);
         _rain.DOColor(Color.white, 1f);
 
@@ -69,7 +66,7 @@ public class AccidentView : MonoBehaviour
 
     public IEnumerator RaiseWoodcutterAccident()
     {
-        PrintMessage("Woodcutter hit our wood..");
+        PrintMessage("의문의 나무꾼이 나무를 벱니다..");
         yield return null;
     }
 }

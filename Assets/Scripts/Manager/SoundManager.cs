@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : SingletonBehavior<SoundManager>
+public class SoundManager : SingletonBehaviorDDOL<SoundManager>
 {
     private readonly List<AudioSource> _audioSources = new List<AudioSource>();
     private readonly HashSet<int> _usingIndexes = new HashSet<int>();
