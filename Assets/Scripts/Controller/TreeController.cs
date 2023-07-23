@@ -10,7 +10,6 @@ public class TreeController : MonoBehaviour
 
     public void Init(TreeModel treeModel)
     {
-        Debug.Log(treeModel);
         _treeModel = treeModel;
         _treeModel.OnTreeDestroyed += OnTreeDestroyed;
     }

@@ -7,5 +7,5 @@
   "ThrowMotionTime": 0.5,
   "JumpTime": 1,
   "JumpCooldown": 2,
-  "JumpHeight": 1
+  "JumpHeight": 2.2
 }

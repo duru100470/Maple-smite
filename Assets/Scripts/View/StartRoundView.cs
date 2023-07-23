@@ -54,62 +54,33 @@ public class StartRoundView : MonoBehaviour
 
     public void StartCountDown(int stage, int winner = 0)
     {
-        if (stage != 1) ChangeRoundUITween(_roundUI[stage - 1], _roundUI[stage]);
-        else StartCoroutine(StartCountCoroutine());
+        // TODO: 2, 4라운드로 바꿔야함
+        if (stage != 1)
+            ChangeRoundUITween(_roundUI[stage - 2], _roundUI[stage - 1]);
+        else
+            _roundUI[0].color = Color.white;
+        StartCoroutine(StartCountCoroutine());
     }
 
     private IEnumerator StartCountCoroutine()
     {
-        while(_startCountDown < 3)
-        {
-            if (_timer < 0)
-            {
-                StartCountTween();
-                _startCountDown++;
-                _timer = 1f;
-                continue;
-            }
-            _timer -= Time.deltaTime;
+        _countUI[0].color = Color.white;
 
-            yield return null;
+        for (int i = 1; i < 3; i++)
+        {
+            yield return new WaitForSeconds(1f);
+            _countUI[i].color = Color.white;
+            _countUI[i - 1].color = new Color(1f, 1f, 1f, 0f);
         }
+
+        yield return new WaitForSeconds(1f);
+        _countUI[2].color = new Color(1f, 1f, 1f, 0f);
+        _roundController.StartNewRound();
     }
 
     private void ChangeRoundUITween(Image current, Image next)
     {
-        _roundSeq = DOTween.Sequence().Pause().SetUpdate(true)
-        .Append(current.transform.DOScale(0, 0.2f))
-        .Append(next.DOFade(1, 0))
-        .Join(current.DOFade(0, 0))
-        .Join(current.transform.DOScale(1, 0))
-        .Join(next.transform.DOPunchScale(_roundSeq_TO, _roundSeq_Duration, _roundSeq_Vibrato).SetEase(Ease.OutQuad))
-        .OnComplete(() =>
-        {
-            StartCoroutine(StartCountCoroutine());
-        });
-
-        _roundSeq.Restart();
-    }
-
-    private void StartCountTween()
-    {
-        _countDownSeq = DOTween.Sequence().Pause().SetUpdate(true)
-        .Append(_countUI[_startCountDown].transform.DOScale(0.6f, 0))
-        //.Join(_countUI[_startCountDown].DOFade(1, 0))
-        .Join(_countUI[_startCountDown].transform.DORotate(new Vector3(0, 0, 360), 0.8f, RotateMode.FastBeyond360).SetEase(Ease.OutBack))
-        .Join(_countUI[_startCountDown].transform.DOScale(1f, 0.6f).SetEase(Ease.Linear))
-        //.Join(_countUI[_startCountDown].DOFade(0, 0.8f))
-        .Append(_countUI[_startCountDown].transform.DOScale(0, 0.4f))
-        .OnComplete(() =>
-        {
-            if (_startCountDown == 3)
-            {
-                _startCountDown = 0;
-                _timer = 0f;
-                _roundController.StartNewRound();
-            }
-        });
-
-        _countDownSeq.Restart();
+        current.color = new Color(1f, 1f, 1f, 0f);
+        next.color = Color.white;
     }
 }

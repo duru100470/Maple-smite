@@ -20,6 +20,7 @@ public class TreeModel
 
             OnHpChanged?.Invoke(_health, value);
             _health = Math.Max(value, 0);
+            Debug.Log(_health);
 
             if (_health <= 0)
             {

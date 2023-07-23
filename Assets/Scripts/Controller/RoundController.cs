@@ -35,9 +35,12 @@ public class RoundController : MonoBehaviour
         var roundIdx = _roundModel.StageIndex;
 
         _treeModel.Reset(_roundModel.TreeHealthByStage[roundIdx - 1]);
+        _treeModel.IsAttackable = true;
         _treeController.Reset(_roundModel.TreeDamageByStage[roundIdx - 1]);
         _playerController1.Reset();
         _playerController2.Reset();
+        _playerController1.CanAttack = true;
+        _playerController2.CanAttack = true;
 
         _accidentPercent = UnityEngine.Random.Range(0.3f, 0.7f);
         _isAccidentHappen = false;
@@ -56,6 +59,9 @@ public class RoundController : MonoBehaviour
 
     private void OnStageOver(int attackerId)
     {
+        _playerController1.CanAttack = false;
+        _playerController2.CanAttack = false;
+
         _roundModel.WinnerList.Add(attackerId);
         _roundModel.StageIndex++;
     }

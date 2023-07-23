@@ -91,6 +91,7 @@ public class SelectCardView : MonoBehaviour
         yield return new WaitForSeconds(.3f);
 
         _startRoundView.StartCountDown(_roundModel.StageIndex);
+        gameObject.SetActive(false);
     }
 
     public void CardCloseUITween(Image card)

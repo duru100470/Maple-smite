@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private PlayerState _curState;
     [SerializeField]
     private int _id;
+    public bool CanAttack { get; set; } = false;
 
     public int Id => _id;
     public PlayerState CurState => _curState;
@@ -79,6 +80,7 @@ public class PlayerController : MonoBehaviour
 
     private void PressKey(KeyType keyType)
     {
+        if (!CanAttack) return;
         _playerModel.Modified().SkillDict[keyType](this);
     }
 
@@ -168,6 +170,7 @@ public class PlayerController : MonoBehaviour
         _curState = PlayerState.Act;
         yield return new WaitForSeconds(_playerModel.Modified().ThrowMotionTime);
         _curState = PlayerState.Idle;
+        GetComponent<SpriteAnimator>().Play(0);
     }
 
     public void GetStunned(float duration)

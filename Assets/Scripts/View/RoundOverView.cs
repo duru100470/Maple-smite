@@ -55,7 +55,7 @@ public class RoundOverView : MonoBehaviour
             mask = _1PMasks[_1PCount];
             _1PCount++;
         }
-        else
+        else if (winner == 2)
         {
             count = _2PCounts[_2PCount];
             mask = _2PMasks[_2PCount];
@@ -75,9 +75,10 @@ public class RoundOverView : MonoBehaviour
         .Join(mask.transform.DOPunchScale(_pointSeq_TO, _pointSeq_Duration, _pointSeq_Vibrato).SetEase(Ease.OutQuad))
         .OnComplete(() =>
         {
+            _selectCardView.gameObject.SetActive(true);
             _selectCardView.CardSelectUITween(stage switch
             {
-                // For test
+                // TODO: 2, 4 라운드시 에픽, 레전 노하우로 바꿔야함
                 _ => KnowHowManager.Inst.GetRandomEpicKnowHow()
             });
         });
