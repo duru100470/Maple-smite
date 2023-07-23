@@ -25,8 +25,13 @@ public class SkillView : MonoBehaviour
     [field: SerializeField]
     private Image _mask03;
 
-    private float _timer;
-    private float _effectTime = 0.5f;
+    private float _timer01;
+    private float _timer02;
+    private float _timer03;
+
+    private float _effectTime01 = 0.5f;
+    private float _effectTime02 = 0.5f;
+    private float _effectTime03 = 0.5f;
 
     private float _axeCoolTime;
     private float _throwCoolTime;
@@ -64,46 +69,46 @@ public class SkillView : MonoBehaviour
     {
         if (_axeDisabled) return;
         _mask01.fillAmount = 1;
-        _timer = coolTime;
+        _timer01 = coolTime;
         SkillUITween(_axeIcon);
-        StartCoroutine(CoolDownTimerCoroutine(_axeIcon, _mask01, _axeDisabled));
+        StartCoroutine(CoolDownTimerCoroutine(_axeIcon, _mask01, _axeDisabled, _timer01, _effectTime01));
     }
     private void StartThrowCoolDown(float coolTime)
     {
         if (_throwDisabled) return;
         _mask02.fillAmount = 1;
-        _timer = coolTime;
+        _timer02 = coolTime;
         SkillUITween(_throwIcon);
-        StartCoroutine(CoolDownTimerCoroutine(_throwIcon, _mask02, _throwDisabled));
+        StartCoroutine(CoolDownTimerCoroutine(_throwIcon, _mask02, _throwDisabled, _timer02, _effectTime02));
     }
     private void StartJumpCoolDown(float coolTime)
     {
         if (_jumpDisabled) return;
         _mask03.fillAmount = 1;
-        _timer = coolTime;
+        _timer03 = coolTime;
         SkillUITween(_jumpIcon);
-        StartCoroutine(CoolDownTimerCoroutine(_jumpIcon, _mask03, _jumpDisabled));
+        StartCoroutine(CoolDownTimerCoroutine(_jumpIcon, _mask03, _jumpDisabled, _timer03, _effectTime03));
     }
 
-    private IEnumerator CoolDownTimerCoroutine(GameObject icon, Image mask, bool trigger)
+    private IEnumerator CoolDownTimerCoroutine(GameObject icon, Image mask, bool trigger, float timer, float effectTime)
     {
         trigger = true;
-        while (_timer > 0)
+        while(timer > 0)
         {
-            _timer -= Time.deltaTime;
-            _effectTime -= Time.deltaTime;
+            timer -= Time.deltaTime;
+            effectTime -= Time.deltaTime;
 
-            if (_effectTime < 0)
+            if (effectTime < 0)
             {
                 SkillUITween(icon);
-                _effectTime = 0.5f;
+                effectTime = 0.5f;
             }
 
-            mask.fillAmount = _timer / _axeCoolTime;
+            mask.fillAmount = timer / _axeCoolTime;
 
             yield return null;
         }
-        _effectTime = 0.5f;
+        effectTime = 0.5f;
         trigger = false;
     }
 

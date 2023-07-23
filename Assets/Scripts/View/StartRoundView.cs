@@ -48,15 +48,14 @@ public class StartRoundView : MonoBehaviour
     public void Init(RoundModel roundModel)
     {
         _roundModel = roundModel;
+
+        StartCountDown(1);
     }
 
-    public void StartCountDown(int winner)
+    public void StartCountDown(int stage, int winner = 0)
     {
-        if (winner == 1) _1PCount++;
-        else _2PCount++;
-
-        // 다음 라운드 시작 시 호출.
-        ChangeRoundUITween(_roundUI[_1PCount + _2PCount - 1], _roundUI[_1PCount + _2PCount]);
+        if (stage != 1) ChangeRoundUITween(_roundUI[stage - 1], _roundUI[stage]);
+        else StartCoroutine(StartCountCoroutine());
     }
 
     private IEnumerator StartCountCoroutine()
@@ -107,6 +106,7 @@ public class StartRoundView : MonoBehaviour
             {
                 _startCountDown = 0;
                 _timer = 0f;
+                _roundController.StartNewRound();
             }
         });
 

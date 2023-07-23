@@ -54,6 +54,7 @@ public class TreeView : MonoBehaviour
     #endregion
 
     private bool _firstAttack = false;
+    private bool _isPlaying = false;
 
     public void Init(TreeModel treeModel)
     {
@@ -70,18 +71,29 @@ public class TreeView : MonoBehaviour
         _treeModel.OnHpChanged += UpdateAllHPUI;
     }
 
-    private void SetHPUI(RectTransform ui1, RectTransform ui2, Slider slider, int direction)
+    public void SetUI()
+    {
+        SetHPUI(_hp_1P, _damage_1P, _hp_Slider_1P, 1);
+        SetHPUI(_hp_2P, _damage_2P, _hp_Slider_2P, -1);
+    }
+
+    public void SetHPUI(RectTransform ui1, RectTransform ui2, Slider slider, int direction)
     {
         ui1.sizeDelta = new Vector2(_screen_Width * 0.35f, ui1.sizeDelta.y);
         ui1.anchoredPosition = new Vector2(direction * 395f, ui1.anchoredPosition.y);
         slider.maxValue = _treeModel.Health;
         slider.value = _treeModel.Health;
+        Debug.Log(_treeModel.Health);
         slider.minValue = 0;
         ui2.sizeDelta = new Vector2(0, ui2.sizeDelta.y);
     }
 
     private void UpdateAllHPUI(int prevHealth, int currentHealth)
     {
+        //if (_isPlaying) StopCoroutine(DamageBarCoroutine());
+
+        //_isPlaying = true;
+
         int damage = prevHealth - currentHealth;
 
         if (currentHealth < 0f) damage = prevHealth;
@@ -89,12 +101,12 @@ public class TreeView : MonoBehaviour
         UpdateDamageUI(damage, _hp_Slider_1P, _damage_Slider_1P, _hp_1P, _damage_1P);
         UpdateDamageUI(damage, _hp_Slider_2P, _damage_Slider_2P, _hp_2P, _damage_2P);
 
-        UpdateDamageAnchor(_damage_1P, _hp_1P, 1);
-        UpdateDamageAnchor(_damage_2P, _hp_2P, -1);
+        //UpdateDamageAnchor(_damage_1P, _hp_1P, 1);
+        //UpdateDamageAnchor(_damage_2P, _hp_2P, -1);
 
         if (!_firstAttack) _firstAttack = true;
 
-        DamageBar();
+        //DamageBar();
 
         GetDamageUITween((float)damage / (float)currentHealth);
     }
@@ -104,7 +116,7 @@ public class TreeView : MonoBehaviour
         slider1.value = _treeModel.Health - damage;
 
         // 데미지 크기만큼 데미지 슬라이더 생성.
-        ui2.sizeDelta = new Vector2(ui1.sizeDelta.x * (damage / slider1.maxValue), ui2.sizeDelta.y);
+        //ui2.sizeDelta = new Vector2(ui1.sizeDelta.x * (damage / slider1.maxValue), ui2.sizeDelta.y);
 
         slider2.maxValue = damage;
     }
@@ -134,6 +146,8 @@ public class TreeView : MonoBehaviour
 
             yield return null;
         }
+
+        _isPlaying = false;
     }
 
     private void GetDamageUITween(float degree)

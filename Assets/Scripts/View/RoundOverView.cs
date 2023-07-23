@@ -9,6 +9,9 @@ public class RoundOverView : MonoBehaviour
     private RoundModel _roundModel;
 
     [field: SerializeField]
+    private SelectCardView _selectCardView;
+
+    [field: SerializeField]
     private Image[] _1PCounts;
     [field: SerializeField]
     private Image[] _1PMasks;
@@ -36,11 +39,13 @@ public class RoundOverView : MonoBehaviour
     {
         _roundModel = roundModel;
 
-        //_roundModel.OnStageChanged += RoundOverUI;
+        _roundModel.OnStageChanged += RoundOverUI;
     }
 
-    public void RoundOverUI(int winner)
+    private void RoundOverUI(int stage, int winner)
     {
+        Time.timeScale = 0;
+
         Image count = null;
         Image mask = null;
 
@@ -70,7 +75,7 @@ public class RoundOverView : MonoBehaviour
         .Join(mask.transform.DOPunchScale(_pointSeq_TO, _pointSeq_Duration, _pointSeq_Vibrato).SetEase(Ease.OutQuad))
         .OnComplete(() =>
         {
-
+            _selectCardView.CardSelectUITween();
         });
 
         _pointSeq.Restart();

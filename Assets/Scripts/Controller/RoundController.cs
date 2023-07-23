@@ -15,6 +15,9 @@ public class RoundController : MonoBehaviour
     [SerializeField]
     private PlayerController _playerController2;
 
+    [field: SerializeField]
+    private TreeView _treeView;
+
     private float _accidentPercent;
     private bool _isAccidentHappen;
 
@@ -24,8 +27,6 @@ public class RoundController : MonoBehaviour
         _treeModel = treeModel;
         _treeModel.OnTreeDestroyed += OnStageOver;
         _treeModel.OnHpChanged += CheckAccidentShouldHappen;
-
-        StartNewRound();
     }
 
     // TODO: RoundView에서 증강 선택이 완료되거나, 시간이 만료되면 StartNewRound 호출
@@ -40,6 +41,8 @@ public class RoundController : MonoBehaviour
 
         _accidentPercent = UnityEngine.Random.Range(0.3f, 0.7f);
         _isAccidentHappen = false;
+
+        _treeView.SetUI();
     }
 
     private void CheckAccidentShouldHappen(int _, int health)

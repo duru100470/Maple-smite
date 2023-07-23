@@ -23,6 +23,12 @@ public class GameSceneLifetimeCycle : LifetimeCycle
     private SkillView _skillView1;
     [SerializeField]
     private SkillView _skillView2;
+    [SerializeField]
+    private RoundOverView _roundOverView;
+    [SerializeField]
+    private StartRoundView _startRoundView;
+    [SerializeField]
+    private SelectCardView _selectCardView;
 
     public override void Initialize()
     {
@@ -43,6 +49,9 @@ public class GameSceneLifetimeCycle : LifetimeCycle
 
         _roundController.Init(roundModel, treeModel);
         _treeView.Init(treeModel);
+        _roundOverView.Init(roundModel);
+        _startRoundView.Init(roundModel);
+        _selectCardView.Init(roundModel);
     }
 
     private T GetModelFromJson<T>(string path)
